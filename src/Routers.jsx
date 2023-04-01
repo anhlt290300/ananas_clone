@@ -4,7 +4,10 @@ import Home from "./pages/Home";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import ErrorPage from "./pages/ErrorPage";
-import Products from "./pages/Products";
+import ProductsPage from "./pages/ProductsPage";
+import CartFixed from "./component/CartFixed";
+import SocialFixed from "./component/SocialFixed";
+import ProductDetail from "./pages/ProductDetail";
 
 const Routers = () => {
   return (
@@ -16,12 +19,15 @@ const Routers = () => {
             <>
               <Header />
               <Outlet />
+              <CartFixed />
+              <SocialFixed />
               <Footer />
             </>
           }
         >
           <Route index element={<Home />} />
-          <Route path="/product-list" element={<Products />} />
+          <Route path="/product-list" element={<ProductsPage />} />
+          <Route path="/product-detail/:id" element={<ProductDetail />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
