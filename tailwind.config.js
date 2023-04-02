@@ -9,6 +9,9 @@ module.exports = {
         bgFooter: "#4c4c4c",
         orangePrimary: "#ff5f17",
       },
+      boxShadow: {
+        innerbox: "inset 0 0 10px rgba(0,0,0,0.3)",
+      },
     },
   },
   plugins: [],

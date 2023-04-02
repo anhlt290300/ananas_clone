@@ -2,17 +2,17 @@ export const filterData = {
   type: [
     {
       title: "TẤT CẢ",
-      href: "/product-list/#all",
+      href: "/product-list?gender=men,women&category=&attribute=",
       id: "men,women",
     },
     {
       title: "NAM",
-      href: "/#men",
+      href: "/product-list?gender=men&category=&attribute=",
       id: "men",
     },
     {
       title: "NỮ",
-      href: "/#women",
+      href: "/product-list?gender=women&category=&attribute=",
       id: "women",
     },
   ],

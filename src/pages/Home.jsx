@@ -163,6 +163,7 @@ const Home = () => {
       <div className="bg-[#303030] select-none uppercase font-semibold px-6 py-1 inline-block text-white cursor-pointer mb-16">
           muốn xem nữa
       </div>
+
     </div>
   );
 };

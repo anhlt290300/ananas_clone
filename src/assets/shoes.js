@@ -156,7 +156,6 @@ export const shoesData = [
       status: "",
       price: "720.000 VND",
       sizes: [
-        " ",
         "35",
         "36",
         "37",
@@ -636,3 +635,32 @@ export const shoesData = [
     },
   },
 ];
+
+const shuffle = (array) => {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+
+export const getRandomProducts = (number) => {
+  let shoes = shuffle(shoesData);
+  let result = [];
+  for (let i = 0; i < number; i++) {
+    result.push(shoes[i]);
+  }
+  return result;
+};

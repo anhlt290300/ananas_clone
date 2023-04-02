@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
+import { useParams, Link } from "react-router-dom";
 const Filter = ({ type, type_item, filters }) => {
+  
   const [status, setStatus] = useState(true);
   const [style, setStyle] = useState(true);
   const [productline, setProductline] = useState(true);
@@ -44,7 +45,7 @@ const Filter = ({ type, type_item, filters }) => {
       <div className="flex items-center justify-center pb-4 border-b-2 border-black">
         {type.map((item, index) => {
           return (
-            <a key={index} href={item.href} id={item.id}>
+            <Link key={index} to={item.href} id={item.id}>
               <p
                 className={
                   index === 1
@@ -54,7 +55,7 @@ const Filter = ({ type, type_item, filters }) => {
               >
                 {item.title}
               </p>
-            </a>
+            </Link>
           );
         })}
       </div>

@@ -8,6 +8,7 @@ import ProductsPage from "./pages/ProductsPage";
 import CartFixed from "./component/CartFixed";
 import SocialFixed from "./component/SocialFixed";
 import ProductDetail from "./pages/ProductDetail";
+import Loading from "./component/Loading";
 
 const Routers = () => {
   return (
@@ -22,6 +23,7 @@ const Routers = () => {
               <CartFixed />
               <SocialFixed />
               <Footer />
+              <Loading/>
             </>
           }
         >
