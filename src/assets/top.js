@@ -369,4 +369,45 @@ const getTopFromId = (id) => {
   return topData.find((el) => el.id === id);
 };
 
-export { getRandomTop, getAllTop, getTopFromId };
+const getTopFromAttribute = (listAttribute) => {
+  if (listAttribute.length === 0) return topData;
+  let result = [];
+  for (let i = 0; i < listAttribute.length; i++) {
+    let attribute = listAttribute[i].replace("-", " ");
+    //console.log(attribute);
+    let list = [];
+    for (let j = 0; j < topData.length; j++) {
+      let { type, name, sizes, color, saleprice, soldout } = topData[j];
+      if (attribute === "sale off" && soldout) {
+        list.push(topData[j]);
+        continue;
+      }
+      if (type.toLowerCase().search(attribute) !== -1) {
+        list.push(topData[j]);
+        continue;
+      }
+      if (name.toLowerCase().search(attribute) !== -1) {
+        list.push(topData[j]);
+        continue;
+      }
+      if (color.toLowerCase().search(attribute) !== -1) {
+        list.push(topData[j]);
+        continue;
+      }
+      if (saleprice.search(attribute) !== -1) {
+        list.push(topData[j]);
+        continue;
+      }
+      if (sizes.some((el) => attribute === el)) {
+        list.push(topData[j]);
+        continue;
+      }
+    }
+    let result_ = new Set(result.concat(list));
+    result = [...result_];
+  }
+  //console.log(result);
+  return result;
+};
+
+export { getRandomTop, getAllTop, getTopFromId, getTopFromAttribute };

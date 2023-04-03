@@ -1248,6 +1248,9 @@ export const accessoriesData = [
     saleprice: "105.000 VND",
     realprice: "",
     images: [
+      {
+        href: "https://ananas.vn/wp-content/themes/ananas/assets/images/Logo_Ananas.png",
+      },
       { href: "https://ananas.vn/wp-content/uploads/pro_sock_AHCS001_1.jpg" },
     ],
     soldout: true,
@@ -2085,4 +2088,50 @@ const getAccessoriesFromId = (id) => {
   return accessoriesData.find((el) => el.id === id);
 };
 
-export { getRandomAccessories, getAllAccessories, getAccessoriesFromId };
+const getAccessoriesFromAttribute = (listAttribute) => {
+  if (listAttribute.length === 0) return accessoriesData;
+  let result = [];
+  for (let i = 0; i < listAttribute.length; i++) {
+    let attribute = listAttribute[i].replace("-", " ");
+    //console.log(attribute);
+    let list = [];
+    for (let j = 0; j < accessoriesData.length; j++) {
+      let { type, name, sizes, color, saleprice, soldout } = accessoriesData[j];
+      if (attribute === "sale off" && soldout) {
+        list.push(accessoriesData[j]);
+        continue;
+      }
+      if (type.toLowerCase().search(attribute) !== -1) {
+        list.push(accessoriesData[j]);
+        continue;
+      }
+      if (name.toLowerCase().search(attribute) !== -1) {
+        list.push(accessoriesData[j]);
+        continue;
+      }
+      if (color.toLowerCase().search(attribute) !== -1) {
+        list.push(accessoriesData[j]);
+        continue;
+      }
+      if (saleprice.search(attribute) !== -1) {
+        list.push(accessoriesData[j]);
+        continue;
+      }
+      if (sizes.some((el) => attribute === el)) {
+        list.push(accessoriesData[j]);
+        continue;
+      }
+    }
+    let result_ = new Set(result.concat(list));
+    result = [...result_];
+  }
+  //console.log(result);
+  return result;
+};
+
+export {
+  getRandomAccessories,
+  getAllAccessories,
+  getAccessoriesFromId,
+  getAccessoriesFromAttribute,
+};

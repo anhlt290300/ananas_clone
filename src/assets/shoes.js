@@ -5078,4 +5078,45 @@ const getShoesFromId = (id) => {
   return shoesData.find((el) => el.id === id);
 };
 
-export { getRandomShoes, getAllShoes, getShoesFromId };
+const getShoesFromAttribute = (listAttribute) => {
+  if (listAttribute.length === 0) return shoesData;
+  let result = [];
+  for (let i = 0; i < listAttribute.length; i++) {
+    let attribute = listAttribute[i].replace("-", " ");
+    //console.log(attribute);
+    let list = [];
+    for (let j = 0; j < shoesData.length; j++) {
+      let { type, name, sizes, color, saleprice, soldout } = shoesData[j];
+      if (attribute === "sale off" && soldout) {
+        list.push(shoesData[j]);
+        continue;
+      }
+      if (type.toLowerCase().search(attribute) !== -1) {
+        list.push(shoesData[j]);
+        continue;
+      }
+      if (name.toLowerCase().search(attribute) !== -1) {
+        list.push(shoesData[j]);
+        continue;
+      }
+      if (color.toLowerCase().search(attribute) !== -1) {
+        list.push(shoesData[j]);
+        continue;
+      }
+      if (saleprice.search(attribute) !== -1) {
+        list.push(shoesData[j]);
+        continue;
+      }
+      if (sizes.some((el) => attribute === el)) {
+        list.push(shoesData[j]);
+        continue;
+      }
+    }
+    let result_ = new Set(result.concat(list));
+    result = [...result_];
+  }
+  //console.log(result);
+  return result;
+};
+
+export { getRandomShoes, getAllShoes, getShoesFromId, getShoesFromAttribute };

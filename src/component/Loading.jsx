@@ -4,11 +4,22 @@ import { useLocation, useParams } from "react-router-dom";
 const Loading = () => {
   const [open, setOpen] = useState(false);
   const pathname = useLocation().pathname;
-//   const prePathname = JSON.parse(localStorage.getItem("prePathname"));
-//   localStorage.setItem("prePathname", JSON.stringify(pathname));
+  const search = useLocation().search;
+  const category =
+    new URLSearchParams(search).get("category") === null
+      ? ""
+      : new URLSearchParams(search).get("category");
+  const attribute =
+    new URLSearchParams(search).get("attribute") === null
+      ? ""
+      : new URLSearchParams(search).get("attribute");
+  const gender =
+    new URLSearchParams(search).get("gender") === null
+      ? ""
+      : new URLSearchParams(search).get("gender");
 
   useEffect(() => {
-    if (pathname === '/product-list') {
+    if (pathname === "/product-list") {
       setOpen(true);
       document.body.style.overflow = "hidden";
       let timeOut = setTimeout(() => {
@@ -19,7 +30,7 @@ const Loading = () => {
         clearTimeout(timeOut);
       };
     }
-  }, [useLocation().search]);
+  }, [category,attribute,gender]);
   return (
     <div
       className={

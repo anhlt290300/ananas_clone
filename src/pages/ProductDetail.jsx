@@ -6,12 +6,19 @@ import { Navigation } from "swiper";
 import "swiper/css/navigation";
 import InvolvedProducts from "../component/InvolvedProducts";
 import WatchedProducts from "../component/WatchedProducts";
+import { getTopFromId } from "../assets/top";
+import { getAccessoriesFromId } from "../assets/accessories";
 
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 const ProductDetail = () => {
   const id_ = useParams().id;
-  const shoe = getShoesFromId(id_.toUpperCase());
+  const item =
+    getShoesFromId(id_.toUpperCase()) !== undefined
+      ? getShoesFromId(id_.toUpperCase())
+      : getTopFromId(id_.toUpperCase()) !== undefined
+      ? getTopFromId(id_.toUpperCase())
+      : getAccessoriesFromId(id_.toUpperCase());
 
   const {
     images,
@@ -26,7 +33,7 @@ const ProductDetail = () => {
     realprice,
     soldout,
     category,
-  } = shoe;
+  } = item;
   const [current, setCurrent] = useState(0);
   const [openImgs, setOpenImgs] = useState(false);
   const swiperRef = useRef(null);
@@ -328,7 +335,7 @@ const ProductDetail = () => {
                   ? " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
                   : openDescription && category === "shoes"
                   ? " border-b-2 border-[#ccc] border-dashed h-[470px] overflow-hidden transition-all duration-300 ease-in"
-                  : " border-b-2 border-[#ccc] border-dashed h-[120px] overflow-hidden transition-all duration-300 ease-in"
+                  : " border-b-2 border-[#ccc] border-dashed h-[150px] overflow-hidden transition-all duration-300 ease-in"
               }
             >
               {category === "shoes" ? (
@@ -353,7 +360,7 @@ const ProductDetail = () => {
                   <p>Độ co dãn: +/- 3%</p>
                 </div>
               ) : (
-                <div>
+                <div className="my-4">
                   <p>Giới tính: Unisex</p>
                   <p>Size: Free</p>
                   <p>Chất liệu: 100% Cotton</p>
@@ -474,7 +481,7 @@ const ProductDetail = () => {
                   ? " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
                   : openHelp && category === "shoes"
                   ? " border-b-2 border-[#ccc] border-dashed h-[300px] overflow-hidden transition-all duration-300 ease-in"
-                  : " border-b-2 border-[#ccc] border-dashed h-[200px] overflow-hidden transition-all duration-300 ease-in"
+                  : " border-b-2 border-[#ccc] border-dashed h-[150px] overflow-hidden transition-all duration-300 ease-in"
               }
             >
               {category === "shoes" ? (
@@ -494,13 +501,20 @@ const ProductDetail = () => {
                     Hotline: 028 2211 0067
                   </p>
                 </div>
-              ) : (
-                <div>
+              ) : category === "top" ? (
+                <div className="mt-4">
                   <p>
                     Đối với các sản phẩm thuộc nhóm Nửa trên và Nửa dưới, chính
                     sách bảo hành sẽ không được áp dụng. Tuy nhiên bạn có thể áp
                     dụng chính sách đổi hàng cho các sản phẩm này theo quy định
                     về thời gian và phương thức được ghi rõ như trên.
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-4">
+                  <p>
+                    Đối với các sản phẩm thuộc nhóm phụ kiện, chính sách bảo
+                    hành không được áp dụng. Mong bạn thông cảm.
                   </p>
                 </div>
               )}

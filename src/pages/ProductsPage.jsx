@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Filter from "../component/Filter";
 import Products from "../component/Products";
 import { filterData } from "../assets/filter";
-import { getAllShoes } from "../assets/shoes";
+import { getShoesFromAttribute, getAllShoes } from "../assets/shoes";
+import { getTopFromAttribute } from "../assets/top";
+import { getAccessoriesFromAttribute } from "../assets/accessories";
 import { useLocation } from "react-router-dom";
 const ProductsPage = () => {
-  const shoesData = getAllShoes();
-  const search = useLocation().search
-  const gender = new URLSearchParams(search).get('gender')
-  console.log(gender)
+  const [data, setData] = useState(getAllShoes());
+  const search = useLocation().search;
+  const category =
+    new URLSearchParams(search).get("category") === null
+      ? ""
+      : new URLSearchParams(search).get("category");
+  const attribute =
+    new URLSearchParams(search).get("attribute") === null
+      ? ""
+      : new URLSearchParams(search).get("attribute");
+
+  useEffect(() => {
+    const listAttribute = attribute === "" ? [] : attribute?.split(",");
+    if (category === "") {
+      setData(getShoesFromAttribute(listAttribute));
+    } else {
+      if (category === "shoes" || category === "")
+        setData(getShoesFromAttribute(listAttribute));
+      else if (category === "top") setData(getTopFromAttribute(listAttribute));
+      else setData(getAccessoriesFromAttribute(listAttribute));
+    }
+  }, [search, category, attribute]);
+
   return (
     <div className="w-full grid grid-cols-4 gap-8 py-8 px-36">
       <Filter
@@ -17,7 +38,7 @@ const ProductsPage = () => {
         filters={filterData.filter}
       />
       <div className=" col-span-3">
-        <Products data={shoesData} />
+        <Products data={data} />
       </div>
     </div>
   );
