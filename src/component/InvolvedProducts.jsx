@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getRandomProducts } from "../assets/shoes";
+import { getRandomShoes } from "../assets/shoes";
 import { Swiper, SwiperSlide } from "swiper/react";
 const InvolvedProducts = () => {
   const [data, setData] = useState(null);
   useEffect(() => {
-    setData(getRandomProducts(12));
+    setData(getRandomShoes(12));
   }, []);
 
   const swiperRef = useRef(null);
@@ -34,11 +34,18 @@ const InvolvedProducts = () => {
           {data?.map((item, index) => {
             return (
               <SwiperSlide key={index} className=" ">
-                <a href="#">
-                  <img src={item.image[0].href} alt="" />
-                  {item.info.status === "Limited Edition" ? (
+                <a href={item.href}>
+                  <img src={item.images[0].href} alt="" />
+                  {item.type === "Limited Edition" ? (
                     <div className=" absolute left-0 top-6 text-sm px-2 py-1 text-white font-semibold italic bg-[#004e9b]">
                       Limited Edition
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {item.type === "Online Only" ? (
+                    <div className=" absolute left-0 top-6 text-sm px-2 py-1 text-white font-semibold italic bg-[#303030]">
+                      Online Only
                     </div>
                   ) : (
                     ""
@@ -46,13 +53,18 @@ const InvolvedProducts = () => {
                 </a>
                 <div className="text-center mt-2">
                   <a
-                    href="#"
+                    href={item.href}
                     className=" font-semibold hover:text-orangePrimary my-2"
                   >
-                    {item.info.name}
+                    {item.name}
                   </a>
-                  <p className="my-2">{item.info.id}</p>
-                  <p className=" font-semibold my-2">{item.info.price}</p>
+                  <p className="my-2">{item.color}</p>
+                  <div className=" font-semibold my-2">
+                    <span>{item.saleprice}</span>
+                    <span className=" text-[#808080] font-normal line-through ml-4">
+                      {item.realprice}
+                    </span>
+                  </div>
                 </div>
               </SwiperSlide>
             );

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { shoesData } from "../assets/shoes";
+import { getShoesFromId } from "../assets/shoes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import "swiper/css/navigation";
@@ -10,9 +10,23 @@ import WatchedProducts from "../component/WatchedProducts";
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 const ProductDetail = () => {
-  const id = useParams().id;
-  const shoe = shoesData.find((el) => el.info.id.toLowerCase() === id);
-  const { image, info } = shoe;
+  const id_ = useParams().id;
+  const shoe = getShoesFromId(id_.toUpperCase());
+
+  const {
+    images,
+    type,
+    name,
+    id,
+    description,
+    sizes,
+    colorsSame,
+    color,
+    saleprice,
+    realprice,
+    soldout,
+    category,
+  } = shoe;
   const [current, setCurrent] = useState(0);
   const [openImgs, setOpenImgs] = useState(false);
   const swiperRef = useRef(null);
@@ -78,7 +92,7 @@ const ProductDetail = () => {
       >
         <div className=" col-span-7">
           <div className=" relative">
-            <img src={image[current].href} alt="" className="w-full" />
+            <img src={images[current].href} alt="" className="w-full" />
             <div
               onClick={() => setOpenImgs((openImgs) => !openImgs)}
               className=" absolute right-5 bottom-5 cursor-pointer opacity-60 hover:opacity-100"
@@ -99,7 +113,7 @@ const ProductDetail = () => {
             navigation={true}
             modules={[Navigation]}
           >
-            {image.map((item, index) => {
+            {images.map((item, index) => {
               return (
                 <SwiperSlide key={index}>
                   <img
@@ -113,15 +127,19 @@ const ProductDetail = () => {
           </Swiper>
         </div>
         <div className="p-2 col-span-5">
-          <p className="text-3xl font-semibold leading-normal">{info.name}</p>
+          <p className="text-3xl font-semibold leading-normal">
+            {name} - {color}
+          </p>
           <div className="w-full flex items-center justify-between my-6">
             <p className=" font-thin">
-              Mã sản phẩm: <span className=" font-semibold">{info.id}</span>
+              Mã sản phẩm: <span className=" font-semibold">{id}</span>
             </p>
-            {info.status !== "" ? (
+            {type !== "" ? (
               <p className=" font-thin">
                 Tình trạng:{" "}
-                <span className=" font-semibold">{info.status}</span>
+                <span className=" font-semibold">
+                  {soldout ? "Sale off" : type}
+                </span>
               </p>
             ) : (
               ""
@@ -129,15 +147,34 @@ const ProductDetail = () => {
           </div>
           <p
             style={{ fontFamily: "GeometricExtraBold" }}
-            className=" text-xl text-orangePrimary font-semibold mb-6"
+            className=" text-2xl text-orangePrimary font-semibold mb-6"
           >
-            {info.price}
+            <span>{saleprice}</span>
+            <span className="text-lg text-[#808080] font-semibold line-through ml-4">
+              {realprice}
+            </span>
           </p>
           <div className="border-b-2 border-[#ccc] border-dashed" />
+          {description !== "" ? (
+            <div className="border-b-2 border-[#ccc] border-dashed">
+              <p className=" my-6">
+                <span>{description}</span>
+              </p>
+            </div>
+          ) : (
+            ""
+          )}
           <div className="flex items-center justify-start my-6">
-            <div className="bg-[#a65e7e] p-4 mx-2" />
-            <div className="bg-[#009473] p-4 mx-2" />
-            <div className="bg-[#5065ac] p-4 mx-2" />
+            {colorsSame.map((item, index) => {
+              return (
+                <a key={index} href={item.href}>
+                  <p
+                    style={{ backgroundColor: `${item.color}` }}
+                    className="p-4 mx-2"
+                  />
+                </a>
+              );
+            })}
           </div>
           <div className="border-b-2 border-[#ccc] border-dashed" />
           <div className="grid grid-cols-2 gap-8 my-5">
@@ -166,7 +203,7 @@ const ProductDetail = () => {
                 }
               >
                 <div className="grid grid-cols-4">
-                  {info.sizes.map((item, index) => {
+                  {sizes.map((item, index) => {
                     return (
                       <div
                         key={index}
@@ -287,21 +324,43 @@ const ProductDetail = () => {
 
             <div
               className={
-                openDescription
+                !openDescription
+                  ? " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
+                  : openDescription && category === "shoes"
                   ? " border-b-2 border-[#ccc] border-dashed h-[470px] overflow-hidden transition-all duration-300 ease-in"
-                  : " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
+                  : " border-b-2 border-[#ccc] border-dashed h-[120px] overflow-hidden transition-all duration-300 ease-in"
               }
             >
-              <p className="mt-6">Gender: Unisex</p>
-              <p>Size run: 35 – 46</p>
-              <p>Upper: Corduroy</p>
-              <p>Outsole: Rubber</p>
-              <p className="pt-3">
-                <img
-                  src="https://ananas.vn/wp-content/uploads/Size-chart-1-e1559209680920.jpg"
-                  alt=""
-                />
-              </p>
+              {category === "shoes" ? (
+                <div>
+                  <p className="mt-6">Gender: Unisex</p>
+                  <p>Size run: 35 – 46</p>
+                  <p>Upper: Corduroy</p>
+                  <p>Outsole: Rubber</p>
+                  <p className="pt-3">
+                    <img
+                      src="https://ananas.vn/wp-content/uploads/Size-chart-1-e1559209680920.jpg"
+                      alt=""
+                    />
+                  </p>
+                </div>
+              ) : category === "top" ? (
+                <div>
+                  <p>Giới tính: Unisex</p>
+                  <p>Form nên mặc: Oversized</p>
+                  <p>Chất liệu: 100% Cotton</p>
+                  <p>Định lượng: 220 GSM</p>
+                  <p>Độ co dãn: +/- 3%</p>
+                </div>
+              ) : (
+                <div>
+                  <p>Giới tính: Unisex</p>
+                  <p>Size: Free</p>
+                  <p>Chất liệu: 100% Cotton</p>
+                  <p>Họa tiết – /Go Skate/</p>
+                  <p>Tem dệt sắc nét</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -331,46 +390,56 @@ const ProductDetail = () => {
             </div>
             <div
               className={
-                openRuler
-                  ? " border-b-2 border-[#ccc] border-dashed h-[580px] overflow-hidden transition-all duration-300 ease-in"
-                  : " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
+                !openRuler
+                  ? " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
+                  : openRuler && type === "Limited Edition"
+                  ? " border-b-2 border-[#ccc] border-dashed h-[120px] overflow-hidden transition-all duration-300 ease-in"
+                  : " border-b-2 border-[#ccc] border-dashed h-[580px] overflow-hidden transition-all duration-300 ease-in"
               }
             >
-              <ul className="mt-4 ml-16">
-                <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
-                  Chỉ đổi hàng 1 lần duy nhất, mong bạn cân nhắc kĩ trước khi
-                  quyết định.
-                </li>
-                <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
-                  Thời hạn đổi sản phẩm khi mua trực tiếp tại cửa hàng là 07
-                  ngày, kể từ ngày mua. Đổi sản phẩm khi mua online là 14 ngày,
-                  kể từ ngày nhận hàng.
-                </li>
-                <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
-                  Sản phẩm đổi phải kèm hóa đơn. Bắt buộc phải còn nguyên tem,
-                  hộp, nhãn mác.
-                </li>
-                <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
-                  Sản phẩm đổi không có dấu hiệu đã qua sử dụng, không giặt tẩy,
-                  bám bẩn, biến dạng.
-                </li>
-                <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
-                  Ananas chỉ ưu tiên hỗ trợ đổi size. Trong trường hợp sản phẩm
-                  hết size cần đổi, bạn có thể đổi sang 01 sản phẩm khác: <br />
-                  - Nếu sản phẩm muốn đổi ngang giá trị hoặc có giá trị cao hơn,
-                  bạn sẽ cần bù khoảng chênh lệch tại thời điểm đổi (nếu có).{" "}
-                  <br />- Nếu bạn mong muốn đổi sản phẩm có giá trị thấp hơn,
-                  chúng tôi sẽ không hoàn lại tiền.
-                </li>
-                <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
-                  Trong trường hợp sản phẩm - size bạn muốn đổi không còn hàng
-                  trong hệ thống. Vui lòng chọn sản phẩm khác.
-                </li>
-                <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
-                  Không hoàn trả bằng tiền mặt dù bất cứ trong trường hợp nào.
-                  Mong bạn thông cảm.
-                </li>
-              </ul>
+              {type !== "Limited Edition" ? (
+                <ul className="mt-4 ml-16">
+                  <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
+                    Chỉ đổi hàng 1 lần duy nhất, mong bạn cân nhắc kĩ trước khi
+                    quyết định.
+                  </li>
+                  <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
+                    Thời hạn đổi sản phẩm khi mua trực tiếp tại cửa hàng là 07
+                    ngày, kể từ ngày mua. Đổi sản phẩm khi mua online là 14
+                    ngày, kể từ ngày nhận hàng.
+                  </li>
+                  <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
+                    Sản phẩm đổi phải kèm hóa đơn. Bắt buộc phải còn nguyên tem,
+                    hộp, nhãn mác.
+                  </li>
+                  <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
+                    Sản phẩm đổi không có dấu hiệu đã qua sử dụng, không giặt
+                    tẩy, bám bẩn, biến dạng.
+                  </li>
+                  <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
+                    Ananas chỉ ưu tiên hỗ trợ đổi size. Trong trường hợp sản
+                    phẩm hết size cần đổi, bạn có thể đổi sang 01 sản phẩm khác:{" "}
+                    <br />- Nếu sản phẩm muốn đổi ngang giá trị hoặc có giá trị
+                    cao hơn, bạn sẽ cần bù khoảng chênh lệch tại thời điểm đổi
+                    (nếu có). <br />- Nếu bạn mong muốn đổi sản phẩm có giá trị
+                    thấp hơn, chúng tôi sẽ không hoàn lại tiền.
+                  </li>
+                  <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
+                    Trong trường hợp sản phẩm - size bạn muốn đổi không còn hàng
+                    trong hệ thống. Vui lòng chọn sản phẩm khác.
+                  </li>
+                  <li className=" relative after:w-4 after:h-4 after:bg-[url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/policy_bullet.png')] after:absolute after:top-[6px] after:right-[calc(100%+4px)] after:bg-no-repeat">
+                    Không hoàn trả bằng tiền mặt dù bất cứ trong trường hợp nào.
+                    Mong bạn thông cảm.
+                  </li>
+                </ul>
+              ) : (
+                <p className="mt-6">
+                  Đối với những sản phẩm giày và thời trang thuộc phiên bản giới
+                  hạn. Vì nhiều lý do chúng tôi sẽ không áp dụng chính sách đổi
+                  hàng. Vui lòng cân nhắc kỹ trước khi quyết định mua.
+                </p>
+              )}
             </div>
           </div>
 
@@ -401,24 +470,40 @@ const ProductDetail = () => {
 
             <div
               className={
-                openHelp
+                !openHelp
+                  ? " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
+                  : openHelp && category === "shoes"
                   ? " border-b-2 border-[#ccc] border-dashed h-[300px] overflow-hidden transition-all duration-300 ease-in"
-                  : " border-b-2 border-[#ccc] border-dashed h-0 overflow-hidden transition-all duration-300 ease-in -translate-y-[2px]"
+                  : " border-b-2 border-[#ccc] border-dashed h-[200px] overflow-hidden transition-all duration-300 ease-in"
               }
             >
-              <p className="mt-6">
-                Mỗi đôi giày Ananas trước khi xuất xưởng đều trải qua nhiều khâu
-                kiểm tra. Tuy vậy, trong quá trình sử dụng, nếu nhận thấy các
-                lỗi: gãy đế, hở đế, đứt chỉ may,...trong thời gian 6 tháng từ
-                ngày mua hàng, mong bạn sớm gửi sản phẩm về Ananas nhằm giúp
-                chúng tôi có cơ hội phục vụ bạn tốt hơn. Vui lòng gửi sản phẩm
-                về bất kỳ cửa hàng Ananas nào, hoặc gửi đến trung tâm bảo hành
-                Ananas ngay trong trung tâm TP.HCM trong giờ hành chính:
-              </p>
-              <p className="mt-2">
-                Địa chỉ: 170-172, Đinh Bộ Lĩnh, P.26 , Q.Bình Thạnh, TP.HCM
-                Hotline: 028 2211 0067
-              </p>
+              {category === "shoes" ? (
+                <div>
+                  <p className="mt-6">
+                    Mỗi đôi giày Ananas trước khi xuất xưởng đều trải qua nhiều
+                    khâu kiểm tra. Tuy vậy, trong quá trình sử dụng, nếu nhận
+                    thấy các lỗi: gãy đế, hở đế, đứt chỉ may,...trong thời gian
+                    6 tháng từ ngày mua hàng, mong bạn sớm gửi sản phẩm về
+                    Ananas nhằm giúp chúng tôi có cơ hội phục vụ bạn tốt hơn.
+                    Vui lòng gửi sản phẩm về bất kỳ cửa hàng Ananas nào, hoặc
+                    gửi đến trung tâm bảo hành Ananas ngay trong trung tâm
+                    TP.HCM trong giờ hành chính:
+                  </p>
+                  <p className="mt-2">
+                    Địa chỉ: 170-172, Đinh Bộ Lĩnh, P.26 , Q.Bình Thạnh, TP.HCM
+                    Hotline: 028 2211 0067
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p>
+                    Đối với các sản phẩm thuộc nhóm Nửa trên và Nửa dưới, chính
+                    sách bảo hành sẽ không được áp dụng. Tuy nhiên bạn có thể áp
+                    dụng chính sách đổi hàng cho các sản phẩm này theo quy định
+                    về thời gian và phương thức được ghi rõ như trên.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -437,7 +522,7 @@ const ProductDetail = () => {
             </div>
             <div
               className="w-[50vw] h-full bg-contain bg-no-repeat absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ backgroundImage: `url(${image[current].href})` }}
+              style={{ backgroundImage: `url(${images[current].href})` }}
             />
             <div className=" m-auto ">
               <div
@@ -460,7 +545,7 @@ const ProductDetail = () => {
                 // loop={true}
                 modules={{ Navigation }}
               >
-                {image.map((item, index) => {
+                {images.map((item, index) => {
                   return (
                     <SwiperSlide key={index} className="p-auto">
                       <img
