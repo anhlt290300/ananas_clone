@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { ToggleLoad } from "../redux/loadingSlice";
 const Filter = ({ type, type_item, filters }) => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -14,6 +16,8 @@ const Filter = ({ type, type_item, filters }) => {
 
   const listAttribute = !attribute ? [] : attribute.split(",");
   useEffect(() => {}, [pathname]);
+
+  const dispatch = useDispatch();
 
   const HandleFilter = (category_value, attribute_value) => {
     if (category_value !== null) {
@@ -40,8 +44,9 @@ const Filter = ({ type, type_item, filters }) => {
               attribute.search(attribute_value) + attribute_value.length
             )
       }`;
-      console.log(listAttribute);
+      //console.log(listAttribute);
       navigate(string);
+      dispatch(ToggleLoad());
     }
   };
 
@@ -118,7 +123,10 @@ const Filter = ({ type, type_item, filters }) => {
               }
               key={index}
               id={item.id}
-              onClick={() => HandleFilter(item.id, null)}
+              onClick={() => {
+                dispatch(ToggleLoad());
+                HandleFilter(item.id, null);
+              }}
             >
               {item.title}
               <span className=" absolute top-1/2 -translate-y-1/2 right-4 hidden group-[.open]:block">

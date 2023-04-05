@@ -1,36 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { ReactComponent as ReactLogo } from "../assets/loadingicon.svg";
-import { useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ToggleLoad } from "../redux/loadingSlice";
 const Loading = () => {
   const [open, setOpen] = useState(false);
-  const pathname = useLocation().pathname;
-  const search = useLocation().search;
-  const category =
-    new URLSearchParams(search).get("category") === null
-      ? ""
-      : new URLSearchParams(search).get("category");
-  const attribute =
-    new URLSearchParams(search).get("attribute") === null
-      ? ""
-      : new URLSearchParams(search).get("attribute");
-  const gender =
-    new URLSearchParams(search).get("gender") === null
-      ? ""
-      : new URLSearchParams(search).get("gender");
-
+  const dispatch = useDispatch();
+  const isload = useSelector((state) => state.loading.isload);
   useEffect(() => {
-    if (pathname === "/product-list") {
+    if (isload) {
       setOpen(true);
-      document.body.style.overflow = "hidden";
-      let timeOut = setTimeout(() => {
+      let a = setTimeout(() => {
         setOpen(false);
-        document.body.style.overflow = "scroll";
+        dispatch(ToggleLoad());
       }, 1000);
       return () => {
-        clearTimeout(timeOut);
+        clearTimeout(a);
       };
     }
-  }, [category,attribute,gender]);
+  }, [isload, dispatch]);
   return (
     <div
       className={

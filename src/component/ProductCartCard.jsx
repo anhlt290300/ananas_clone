@@ -10,6 +10,7 @@ import {
   updateQuantityItem,
   updateSizeItem,
 } from "../redux/cartSlice";
+import { ToggleLoad } from "../redux/loadingSlice";
 const ProductCartCard = ({ id, category, size, quantity }) => {
   const dispatch = useDispatch();
   let { name, color, saleprice, realprice, images, soldout, href, sizes } =
@@ -32,6 +33,7 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
         quantity: newQuantity,
       })
     );
+    dispatch(ToggleLoad());
   };
 
   const handleUpdateSize = (newSize) => {
@@ -43,6 +45,7 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
         quantity: quantity,
       })
     );
+    dispatch(ToggleLoad());
   };
 
   const handleDelete = () => {
@@ -52,6 +55,7 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
         size: size,
       })
     );
+    dispatch(ToggleLoad());
   };
   return (
     <div className=" grid grid-cols-12 gap-12 select-none">

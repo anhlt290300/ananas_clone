@@ -39,8 +39,9 @@ export const getTotal = (listItems) => {
   result.reverse();
   total = "";
   for (let i = 0; i < result.length; i++) {
-    total += result[i];
+    if (i === 0 && result[i] === ",") continue;
+    else total += result[i];
   }
   //console.log(total + " VND");
-  return total ;
+  return total;
 };

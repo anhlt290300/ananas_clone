@@ -13,7 +13,7 @@ const CartFixed = () => {
   const [total, setTotal] = useState(getTotal(cart));
 
   useEffect(() => {
-    console.log(cart.length);
+    //console.log(cart.length);
     let list = [];
     cart.forEach((element) => {
       let { size, quantity } = element;
@@ -29,8 +29,9 @@ const CartFixed = () => {
     //console.log(list);
     setData([...list]);
     setTotal(getTotal(cart));
-    //setOpen(true)
   }, [cart]);
+
+
 
   return (
     <div

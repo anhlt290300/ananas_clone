@@ -10,6 +10,7 @@ import { getTopFromId } from "../assets/top";
 import { getAccessoriesFromId } from "../assets/accessories";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cartSlice";
+import { ToggleLoad } from "../redux/loadingSlice";
 
 export const quantitys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -113,8 +114,11 @@ const ProductDetail = () => {
           category: category,
         })
       );
+      dispatch(ToggleLoad());
       if (link) {
-        navigate("/your-cart");
+        setTimeout(() => {
+          navigate("/your-cart");
+        }, 1000);
       }
     }
   };
@@ -245,7 +249,14 @@ const ProductDetail = () => {
                     return (
                       <div
                         key={index}
-                        onClick={item !== size ? () => setSize(item) : () => {}}
+                        onClick={
+                          item !== size
+                            ? () => {
+                                setSize(item);
+                                dispatch(ToggleLoad());
+                              }
+                            : () => {}
+                        }
                         className={
                           item === size
                             ? "text-center h-16 flex items-center justify-center border border-[#a5a5a5] bg-bgGray cursor-pointer outline outline-2 -outline-offset-4 outline-black"
@@ -312,7 +323,9 @@ const ProductDetail = () => {
           </div>
           <div className="grid grid-cols-5 gap-2">
             <div
-              onClick={() => handleAdd(false)}
+              onClick={() => {
+                handleAdd(false);
+              }}
               className=" col-span-4 bg-black text-white text-xl font-semibold text-center py-6 cursor-pointer"
             >
               THÊM VÀO GIỎ HÀNG

@@ -8,6 +8,7 @@ import "swiper/css/thumbs";
 import { Autoplay } from "swiper";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cartSlice";
+import { ToggleLoad } from "../redux/loadingSlice";
 
 const HintCart = ({ data }) => {
   const swiperRef = useRef(null);
@@ -22,6 +23,7 @@ const HintCart = ({ data }) => {
         category: category,
       })
     );
+    dispatch(ToggleLoad())
   };
   return (
     <div>

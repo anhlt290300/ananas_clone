@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
+import { Autoplay } from "swiper";
 
 const Slider = ({ sliders }) => {
   const swiperRef = useRef(null);
@@ -22,6 +22,11 @@ const Slider = ({ sliders }) => {
         onSlideChange={() => {
           let index = swiperRef.current.realIndex;
           setCurrent(index);
+        }}
+        modules={[Autoplay]}
+        autoplay={{
+          delay: 5000,
+          pauseOnMouseEnter: true,
         }}
       >
         {sliders.map((item, index) => {
