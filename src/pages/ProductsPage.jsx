@@ -6,6 +6,7 @@ import { getShoesFromAttribute, getAllShoes } from "../assets/shoes";
 import { getTopFromAttribute } from "../assets/top";
 import { getAccessoriesFromAttribute } from "../assets/accessories";
 import { useLocation } from "react-router-dom";
+import BtnScroll from "../component/BtnScroll";
 const ProductsPage = () => {
   const [data, setData] = useState(getAllShoes());
   const search = useLocation().search;
@@ -40,6 +41,7 @@ const ProductsPage = () => {
       <div className=" col-span-3">
         <Products data={data} />
       </div>
+      <BtnScroll />
     </div>
   );
 };

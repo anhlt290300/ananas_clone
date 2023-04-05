@@ -9,6 +9,11 @@ import CartFixed from "./component/CartFixed";
 import SocialFixed from "./component/SocialFixed";
 import ProductDetail from "./pages/ProductDetail";
 import Loading from "./component/Loading";
+import Cart from "./pages/Cart";
+import Promotion from "./pages/Promotion";
+import Discoveryou from "./pages/Discoveryou";
+import HeaderMini from "./component/HeaderMini";
+import ComingSoon from "./pages/ComingSoon";
 
 const Routers = () => {
   return (
@@ -18,18 +23,23 @@ const Routers = () => {
           path="/"
           element={
             <>
+              <HeaderMini />
               <Header />
               <Outlet />
               <CartFixed />
               <SocialFixed />
               <Footer />
-              <Loading/>
+              <Loading />
             </>
           }
         >
           <Route index element={<Home />} />
           <Route path="/product-list" element={<ProductsPage />} />
           <Route path="/product-detail/:id" element={<ProductDetail />} />
+          <Route path="/your-cart/" element={<Cart />} />
+          <Route path="/promotion/clearance-sale/" element={<Promotion />} />
+          <Route path="/discoveryou/" element={<Discoveryou />} />
+          <Route path="/coming-soon/" element={<ComingSoon />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

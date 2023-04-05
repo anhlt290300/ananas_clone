@@ -5119,4 +5119,15 @@ const getShoesFromAttribute = (listAttribute) => {
   return result;
 };
 
-export { getRandomShoes, getAllShoes, getShoesFromId, getShoesFromAttribute };
+const getShoesSale = () => {
+  let result = shoesData.filter((el) => el.type === "Online Only");
+  return result;
+};
+
+export {
+  getRandomShoes,
+  getAllShoes,
+  getShoesFromId,
+  getShoesFromAttribute,
+  getShoesSale,
+};

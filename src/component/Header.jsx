@@ -438,13 +438,13 @@ const Header = () => {
               return (
                 <li
                   key={index}
-                  className=" group h-full flex items-center cursor-pointer transition-all duration-200 ease-linear"
+                  className={` group h-full flex items-center cursor-pointer transition-all duration-200 ease-linear`}
                 >
                   <a
                     href={item.href}
                     className={
                       index < 3
-                        ? "flex items-center text-2xl uppercase px-5 h-full relative hover:after:w-4 hover:after:h-4 hover:after:bg-bgFooter hover:after:absolute after:bottom-0 after:left-1/2 hover:after:translate-y-1/2 hover:after:rotate-45"
+                        ? "flex items-center text-2xl uppercase px-5 h-full relative after:w-4 after:h-4 after:opacity-0 after:bg-bgFooter after:absolute after:bottom-0 after:left-1/2 after:translate-y-1/2 after:rotate-45 after:transition-all after:duration-200 after:delay-500 after:ease-linear hover:after:opacity-100"
                         : "flex items-center text-2xl uppercase px-5 h-full relative"
                     }
                   >
@@ -474,13 +474,9 @@ const Header = () => {
 
                   {/* hop products */}
                   <div
-                    className={
-                      index === 0
-                        ? "w-screen bg-bgFooter absolute top-full left-0 z-[999] text-center h-0 group-hover:w-screen group-hover:h-fit overflow-hidden transition-all duration-300 ease-in"
-                        : "hidden"
-                    }
+                    className={`w-screen bg-bgFooter absolute top-full left-0 z-[999] text-center h-0 opacity-0 group-hover:w-screen group-hover:h-[28rem] group-hover:opacity-100 overflow-hidden transition-all delay-500 duration-0 ease-linear`}
                   >
-                    <ul className="grid grid-cols-4 w-full py-6 px-28 gap-12 h-full">
+                    <ul className="grid grid-cols-4 w-full py-6 px-28 gap-12">
                       {products.map((item, index) => {
                         return (
                           <li

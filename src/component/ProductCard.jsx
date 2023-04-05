@@ -1,28 +1,38 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const ProductCard = ({ data }) => {
-  const { images, href, type, name, color, price, soldout } = data;
+const ProductCard = ({ data, sale = false }) => {
+  const { images, href, type, name, color, saleprice, realprice, soldout } =
+    data;
   const [like, setLike] = useState(false);
   return (
     <div className="text-center relative select-none">
-      <div className="w-full relative h-[40vh] group">
+      <div
+        className={
+          !sale
+            ? "w-full relative h-[40vh] group"
+            : "w-full relative h-[50vh] group"
+        }
+      >
         <a href={href}>
           <img
-            src={images[0].href}
+            src={images[1].href}
             alt=""
             className=" absolute top-0 left-0 w-full h-full"
           />
           <img
-            src={images[1].href}
+            src={images[0].href}
             alt=""
             className=" absolute top-0 left-0 w-full h-full group-hover:scale-0"
           />
         </a>
         {!soldout ? (
-          <div className=" cursor-pointer absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 py-3 bg-orangePrimary opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in">
+          <a
+            href={href}
+            className=" cursor-pointer absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 py-3 bg-orangePrimary opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in"
+          >
             <p className=" text-white font-semibold text-xl">MUA NGAY</p>
-          </div>
+          </a>
         ) : (
           ""
         )}
@@ -73,7 +83,10 @@ const ProductCard = ({ data }) => {
           <p className="font-semibold text-sm">{name}</p>
         </a>
         <p className="my-2">{color}</p>
-        <p className=" font-semibold">{price}</p>
+        <p className=" font-semibold">
+          <span>{saleprice}</span>
+          {sale && <span className=" font-normal text-sm line-through ml-4">{realprice}</span>}
+        </p>
       </div>
     </div>
   );
@@ -81,6 +94,7 @@ const ProductCard = ({ data }) => {
 
 ProductCard.propTypes = {
   data: PropTypes.object.isRequired,
+  sale: PropTypes.bool,
 };
 
 export default ProductCard;

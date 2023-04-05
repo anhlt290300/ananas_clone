@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getShoesFromId } from "../assets/shoes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -8,10 +8,14 @@ import InvolvedProducts from "../component/InvolvedProducts";
 import WatchedProducts from "../component/WatchedProducts";
 import { getTopFromId } from "../assets/top";
 import { getAccessoriesFromId } from "../assets/accessories";
+import { useDispatch } from "react-redux";
+import { addItem } from "../redux/cartSlice";
 
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+export const quantitys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const ProductDetail = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const id_ = useParams().id;
   const item =
     getShoesFromId(id_.toUpperCase()) !== undefined
@@ -40,8 +44,10 @@ const ProductDetail = () => {
   const [openSizes, setOpenSizes] = useState(false);
   const [size, setSize] = useState("");
 
+  const [warning, setWarning] = useState(false);
+
   const [openNumber, setOpenNumber] = useState(false);
-  const [number, setNumber] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   const [like, setLike] = useState(false);
 
@@ -53,11 +59,13 @@ const ProductDetail = () => {
 
   useEffect(() => {
     setOpenSizes(false);
+    setWarning(false);
   }, [size]);
 
   useEffect(() => {
     setOpenNumber(false);
-  }, [number]);
+    setWarning(false);
+  }, [quantity]);
 
   useEffect(() => {
     if (openImgs) {
@@ -88,16 +96,39 @@ const ProductDetail = () => {
     }
   }, [openHelp]);
 
+  const check = () => {
+    if (size === "" || quantity === "") {
+      setWarning(true);
+    }
+  };
+
+  const handleAdd = (link = false) => {
+    check();
+    if (size !== "" && quantity !== "") {
+      dispatch(
+        addItem({
+          id: id,
+          size: size,
+          quantity: quantity,
+          category: category,
+        })
+      );
+      if (link) {
+        navigate("/your-cart");
+      }
+    }
+  };
+
   return (
     <div>
       <div
         className={
           openImgs
-            ? "py-16  grid grid-cols-12 gap-14 px-36 select-none group open relative"
-            : "py-16  grid grid-cols-12 gap-14 px-36 select-none group relative"
+            ? "py-16  grid grid-cols-11 gap-14 px-36 select-none group open relative"
+            : "py-16  grid grid-cols-11 gap-14 px-36 select-none group relative"
         }
       >
-        <div className=" col-span-7">
+        <div className=" col-span-6">
           <div className=" relative">
             <img src={images[current].href} alt="" className="w-full" />
             <div
@@ -243,7 +274,7 @@ const ProductDetail = () => {
                     : "border border-[#a5a5a5] py-2 px-4 flex items-center justify-between mt-2 cursor-not-allowed"
                 }
               >
-                <p className="font-semibold min-h-[24px]">{number}</p>
+                <p className="font-semibold min-h-[24px]">{quantity}</p>
                 <img
                   src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/icon_down_black.png"
                   alt=""
@@ -258,15 +289,15 @@ const ProductDetail = () => {
                 }
               >
                 <div className="grid grid-cols-4">
-                  {numbers.map((item, index) => {
+                  {quantitys.map((item, index) => {
                     return (
                       <div
                         key={index}
                         onClick={
-                          item !== number ? () => setNumber(item) : () => {}
+                          item !== quantity ? () => setQuantity(item) : () => {}
                         }
                         className={
-                          item === number
+                          item === quantity
                             ? "text-center h-16 flex items-center justify-center border border-[#ccc] bg-bgGray cursor-pointer outline outline-2 -outline-offset-4 outline-black"
                             : "text-center h-16 flex items-center justify-center border border-[#ccc] hover:bg-bgGray cursor-pointer "
                         }
@@ -280,7 +311,10 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className="grid grid-cols-5 gap-2">
-            <div className=" col-span-4 bg-black text-white text-xl font-semibold text-center py-6 cursor-pointer">
+            <div
+              onClick={() => handleAdd(false)}
+              className=" col-span-4 bg-black text-white text-xl font-semibold text-center py-6 cursor-pointer"
+            >
               THÊM VÀO GIỎ HÀNG
             </div>
             <div
@@ -290,18 +324,25 @@ const ProductDetail = () => {
               <img
                 src={
                   like
-                    ? "https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Heart_product_1.svg"
-                    : "https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Heart_product_2.svg ?"
+                    ? "https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Heart_product_2.svg"
+                    : "https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Heart_product_1.svg"
                 }
                 alt=""
               />
             </div>
           </div>
 
-          <div className=" col-span-4 bg-orangePrimary mt-5 text-white text-xl font-semibold text-center py-6 cursor-pointer">
+          <div
+            onClick={() => handleAdd(true)}
+            className=" col-span-4 bg-orangePrimary mt-5 text-white text-xl font-semibold text-center py-6 cursor-pointer"
+          >
             THANH TOÁN
           </div>
-
+          {warning && (
+            <p className="mt-8 text-orangePrimary italic">
+              Vui lòng chọn Size/Số lượng phù hợp
+            </p>
+          )}
           <div>
             <div
               onClick={() =>
