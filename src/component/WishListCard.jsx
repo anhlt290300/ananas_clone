@@ -4,17 +4,18 @@ import { getShoesFromId } from "../assets/shoes";
 import { getAccessoriesFromId } from "../assets/accessories";
 import { getTopFromId } from "../assets/top";
 import { quantitys } from "../pages/ProductDetail";
-import { useDispatch, useSelector } from "react-redux";
-import { updateQuantityItem, updateSizeItem } from "../redux/cartSlice";
+import { useDispatch } from "react-redux";
+import {
+  deleteWishlist,
+  updateQuantityWishlist,
+  updateSizeWishlist,
+} from "../redux/wishlistSlice";
 import { ToggleLoad } from "../redux/loadingSlice";
-import { addItemDelete, removeItemDelete } from "../redux/deleteHistorySlice";
 import { getTotalWishList } from "../utils/convertTotal";
+import { addItem } from "../redux/cartSlice";
+import { isChange } from "../redux/cartfixedSlice";
 
-const ProductCartCard = ({ id, category, size, quantity }) => {
-  const isDelete = useSelector((state) => state.deleteList.list).some(
-    (el) => el.id === id
-  );
-
+const WishListCard = ({ id, category, size, quantity }) => {
   const dispatch = useDispatch();
   let { name, color, saleprice, realprice, images, soldout, href, sizes } =
     category === "shoes"
@@ -23,57 +24,67 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
       ? getTopFromId(id)
       : getAccessoriesFromId(id);
 
-  const [like, setLike] = useState(false);
-
-  const [openSizeBox, setOpenSizeBox] = useState(false);
-  const [openQuantityBox, setOpenQuantityBox] = useState(false);
-
-  const handleUpdateQuantity = (newQuantity) => {
+  const handleAddToCart = () => {
     dispatch(
-      updateQuantityItem({
+      addItem({
         id: id,
+        category: category,
         size: size,
-        quantity: newQuantity,
+        quantity: quantity,
       })
     );
+    dispatch(isChange());
+    handleDelete();
+  };
+
+  const handleUpdateQuantity = (quantity_) => {
+    setTimeout(() => {
+      dispatch(
+        updateQuantityWishlist({
+          id: id,
+          quantity: quantity_,
+        })
+      );
+    }, 1000);
     dispatch(ToggleLoad());
   };
 
-  const handleUpdateSize = (newSize) => {
-    dispatch(
-      updateSizeItem({
-        id: id,
-        currentsize: size,
-        newsize: newSize,
-      })
-    );
+  const handleUpdateSize = (size_) => {
+    setTimeout(() => {
+      dispatch(
+        updateSizeWishlist({
+          id: id,
+          size: size_,
+        })
+      );
+    }, 1000);
     dispatch(ToggleLoad());
   };
 
   const handleDelete = () => {
+    setTimeout(() => {
+      dispatch(
+        deleteWishlist({
+          id: id,
+        })
+      );
+    }, 1000);
     dispatch(ToggleLoad());
-    setTimeout(
-      () =>
-        dispatch(
-          addItemDelete({
-            id: id,
-            size: size,
-          })
-        ),
-      1000
-    );
   };
-  return !isDelete ? (
-    <div className=" grid grid-cols-12 gap-12 select-none">
-      <div className=" col-span-9 grid grid-cols-3 gap-4">
-        <a href={href}>
-          <img src={images[0].href} alt="" />
+
+  const [openSizeBox, setOpenSizeBox] = useState(false);
+  const [openQuantityBox, setOpenQuantityBox] = useState(false);
+  return (
+    <div className="flex items-center justify-between w-full h-[10rem] select-none">
+      <div className=" flex items-center justify-start h-full relative">
+        <a href={href} className="w-fit h-full">
+          <img src={images[0].href} alt="" className="h-full" />
         </a>
-        <div className=" col-span-2 flex flex-col justify-between items-start relative">
+        <div className="h-full flex flex-col justify-between relative ml-4">
           <p className="text-xl font-semibold">
             {name} - {color}
           </p>
-          <p className="text-[#808080] absolute left-0 top-16">
+          <p className="text-[#808080] absolute left-0 top-12 text-sm">
             <span className="font-semibold">Giá: </span>
             {saleprice}{" "}
             <span className="ml-4 line-through text-sm">{realprice}</span>
@@ -191,7 +202,7 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
           </div>
         </div>
       </div>
-      <div className=" col-span-3 flex flex-col items-end justify-between relative">
+      <div className=" flex flex-col items-end justify-between relative h-full">
         <p className="text-xl font-semibold text-orangePrimary">
           {getTotalWishList(saleprice, quantity)} VND
         </p>
@@ -200,21 +211,18 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
         </p>
         <div>
           <div
-            onClick={() => setLike((like) => !like)}
-            className="border border-borderColor py-3 px-12 cursor-pointer"
+            onClick={() => handleAddToCart()}
+            className="border border-borderColor py-1 px-12 cursor-pointer"
           >
             <img
-              src={
-                like
-                  ? "https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Heart_2.svg"
-                  : "https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Heart.svg"
-              }
+              src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/cart/cart_ana.png"
               alt=""
+              className="h-6"
             />
           </div>
           <div
             onClick={() => handleDelete()}
-            className="bg-[#303030] py-3 px-12 cursor-pointer mt-3"
+            className="bg-[#303030] py-2 px-12 cursor-pointer mt-3"
           >
             <img
               className="m-auto"
@@ -225,30 +233,14 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
         </div>
       </div>
     </div>
-  ) : (
-    <div className="text-[#808080]">
-      <span>Hình như hơi có biến.</span>
-      <span
-        onClick={() => {
-          dispatch(ToggleLoad());
-          setTimeout(
-            () => dispatch(removeItemDelete({ id: id, size: size })),
-            1000
-          );
-        }}
-        className="text-lg text-orangePrimary font-semibold italic underline cursor-pointer"
-      >
-        HOÀN TÁC
-      </span>
-    </div>
   );
 };
 
-ProductCartCard.propTypes = {
+WishListCard.propTypes = {
   id: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
 };
 
-export default ProductCartCard;
+export default WishListCard;

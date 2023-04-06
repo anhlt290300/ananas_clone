@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const HomeBuy = ({ data }) => {
   return (
-    <div className="mt-12 text-center select-none">
+    <div className=" desktop-L:mt-12 desktop:mt-4 text-center select-none">
       <p className="text-3xl font-semibold py-8">DANH MỤC MUA HÀNG</p>
       <div className="grid grid-cols-3 gap-3">
         {data.map((item, index) => {

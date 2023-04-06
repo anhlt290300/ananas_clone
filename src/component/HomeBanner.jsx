@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const HomeBanner = ({ image, href }) => {
   return (
-    <div className="mt-12 m-auto">
+    <div className=" desktop-L:mt-12 desktop:mt-2 m-auto">
       <a href={href}>
         <img src={image} alt="" />
       </a>

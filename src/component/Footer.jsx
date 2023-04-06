@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className=" bg-bgFooter py-16 px-10 grid grid-cols-4 gap-16 select-none">
+    <div className=" bg-bgFooter desktop-L:py-16 desktop:py-8 px-10 grid grid-cols-4 gap-16 select-none">
       <div className="w-full">
         <img
           src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Store.svg"
@@ -148,7 +148,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="grid grid-cols-4 my-12 gap-12">
+        <div className="grid grid-cols-4 desktop-L:my-12 desktop:my-4 desktop:mt-8 gap-12">
           <a href="http://online.gov.vn/Home/WebDetails/61921">
             <img src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/icon_bocongthuong.png" alt="" />
           </a>

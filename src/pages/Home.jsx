@@ -116,8 +116,8 @@ const Home = () => {
     <Helmet title="Ananas - DiscoverYOU">
       <div className="h-fit relative text-center w-full">
         <Slider sliders={sliders} />
-        <div className=" px-32 py-20">
-          <div className="grid grid-cols-2 gap-10">
+        <div className=" desktop-L:px-32 desktop-L:py-20 desktop:px-16 desktop:py-10 tablet:px-3 tablet:py-6">
+          <div className="grid grid-cols-2 desktop:gap-10 tablet:gap-6">
             {slidersCollection.map((item, index) => {
               return <SliderCollection key={index} sliders={item} />;
             })}
@@ -129,10 +129,10 @@ const Home = () => {
           href="/product-list?gender=men,women&category=top,accessories&attribute="
         />
         <section>
-          <p className="text-3xl font-semibold mt-12">TIN TỨC & BÀI VIẾT</p>
+          <p className="text-3xl font-semibold desktop-L:mt-12 desktop:mt-8">TIN TỨC & BÀI VIẾT</p>
           <HomeNews />
         </section>
-        <div className="bg-[#303030] select-none uppercase font-semibold px-6 py-1 inline-block text-white cursor-pointer mb-16">
+        <div className="bg-[#303030] select-none uppercase font-semibold px-6 py-1 inline-block text-white cursor-pointer desktop-L:mb-16 desktop:mb-8">
           muốn xem nữa
         </div>
       </div>

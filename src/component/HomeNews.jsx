@@ -36,7 +36,7 @@ const homenews = [
 const HomeNews = ({ isHome = true }) => {
   return (
     <div className="text-center select-none">
-      <div className="grid grid-cols-2 px-32 py-12 gap-10 text-start">
+      <div className="grid grid-cols-2 desktop-L:px-32 desktop:px-16 desktop-L:py-12 desktop:py-8 desktop-L:gap-10 desktop:gap-6 text-start">
         {homenews.map((item, index) => {
           return (
             <div
@@ -46,7 +46,7 @@ const HomeNews = ({ isHome = true }) => {
               <a href={item.href} className=" relative">
                 <img src={item.image} className="w-full h-[45vh] " alt="" />
               </a>
-              <div className="mt-8">
+              <div className=" desktop-L:mt-8 desktop:mt-4">
                 <a href={item.href} className="text-2xl font-semibold">
                   {item.title}
                 </a>

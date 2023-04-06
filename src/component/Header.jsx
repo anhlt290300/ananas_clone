@@ -444,8 +444,8 @@ const Header = () => {
                     href={item.href}
                     className={
                       index < 3
-                        ? "flex items-center text-2xl uppercase px-5 h-full relative after:w-4 after:h-4 after:opacity-0 after:bg-bgFooter after:absolute after:bottom-0 after:left-1/2 after:translate-y-1/2 after:rotate-45 after:transition-all after:duration-200 after:delay-500 after:ease-linear hover:after:opacity-100"
-                        : "flex items-center text-2xl uppercase px-5 h-full relative"
+                        ? "flex items-center desktop-L:text-2xl desktop:text-xl uppercase px-5 h-full relative after:w-4 after:h-4 after:opacity-0 after:bg-bgFooter after:absolute after:bottom-0 after:left-1/2 after:translate-y-1/2 after:rotate-45 after:transition-all after:duration-200 after:delay-500 after:ease-linear hover:after:opacity-100"
+                        : "flex items-center desktop-L:text-2xl desktop:text-xl uppercase px-5 h-full relative"
                     }
                   >
                     <span style={{ fontFamily: "GeometricExtraBold" }}>

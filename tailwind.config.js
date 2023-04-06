@@ -2,6 +2,14 @@ module.exports = {
   mode: "jit",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screens: {
+      "mobile-S": "320px",
+      "mobile-M": "375px",
+      "mobile-L": "425px",
+      'tablet': "768px",
+      'desktop': "1024px",
+      "desktop-L": "1440px",
+    },
     extend: {
       colors: {
         borderColor: "#a5a5a5",

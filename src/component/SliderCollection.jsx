@@ -26,7 +26,7 @@ const SliderCollection = ({ sliders }) => {
               <a href={item.href} className=" relative">
                 <img
                   src={item.image}
-                  className="w-full h-[45vh] border-r border-black"
+                  className="w-full desktop:h-[45vh] tablet:h-[30vh] border-r border-black"
                   alt=""
                 />
               </a>
@@ -41,7 +41,7 @@ const SliderCollection = ({ sliders }) => {
       <div
         className={
           sliders.length > 1
-            ? "absolute left-1/2 top-[calc(45vh-16px)] -translate-x-1/2 flex items-center justify-center z-[100]"
+            ? "absolute left-1/2 desktop:top-[calc(45vh-16px)] tablet:top-[calc(30vh-16px)] -translate-x-1/2 flex items-center justify-center z-[100]"
             : "hidden"
         }
       >

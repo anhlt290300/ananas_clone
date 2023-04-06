@@ -5,11 +5,12 @@ import { Navigation } from "swiper";
 import "swiper/css/navigation";
 import InvolvedProducts from "../component/InvolvedProducts";
 import WatchedProducts from "../component/WatchedProducts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/cartSlice";
 import { ToggleLoad } from "../redux/loadingSlice";
 import Helmet from "../component/Helmet";
 import { isChange } from "../redux/cartfixedSlice";
+import { addWishlist, deleteWishlist } from "../redux/wishlistSlice";
 export const quantitys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const ProductDetail = () => {
@@ -50,13 +51,20 @@ const ProductDetail = () => {
   const [openNumber, setOpenNumber] = useState(false);
   const [quantity, setQuantity] = useState("");
 
-  const [like, setLike] = useState(false);
-
   const [openDescription, setOpenDescription] = useState(true);
 
   const [openRuler, setOpenRuler] = useState(false);
 
   const [openHelp, setOpenHelp] = useState(false);
+
+  const [like, setLike] = useState(false);
+
+  const wishlist = useSelector((state) => state.wishlist.list);
+
+  useEffect(() => {
+    let bool = wishlist.some((el) => el.id === id && el.category === category);
+    setLike(bool);
+  }, [id, category, wishlist]);
 
   useEffect(() => {
     setOpenSizes(false);
@@ -122,6 +130,20 @@ const ProductDetail = () => {
       }
       dispatch(isChange());
     }
+  };
+
+  const toggleLike = () => {
+    if (like) dispatch(deleteWishlist({ id: id, category: category }));
+    else
+      dispatch(
+        addWishlist({
+          id: id,
+          category: category,
+          size: sizes[0],
+        })
+      );
+
+    setLike(!like);
   };
 
   return (
@@ -332,7 +354,7 @@ const ProductDetail = () => {
               THÊM VÀO GIỎ HÀNG
             </div>
             <div
-              onClick={() => setLike((like) => !like)}
+              onClick={() => toggleLike()}
               className="flex items-center justify-center bg-black cursor-pointer"
             >
               <img

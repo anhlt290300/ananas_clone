@@ -1,10 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { addWishlist, deleteWishlist } from "../redux/wishlistSlice";
 
 const ProductCard = ({ data, sale = false }) => {
-  const { images, href, type, name, color, saleprice, realprice, soldout } =
-    data;
+  const {
+    images,
+    href,
+    type,
+    name,
+    color,
+    saleprice,
+    realprice,
+    soldout,
+    id,
+    category,
+    sizes,
+  } = data;
+  //console.log(category);
   const [like, setLike] = useState(false);
+
+  const wishlist = useSelector((state) => state.wishlist.list)
+
+  useEffect(() => {
+    let bool = wishlist.some(
+      (el) => el.id === id && el.category === category
+    );
+    setLike(bool)
+  }, [id,category,wishlist]);
+
+  //console.log(useSelector((state) => state.wishlist.list));
+  const dispatch = useDispatch();
+  const toggleLike = () => {
+    if (like) dispatch(deleteWishlist({ id: id, category: category }));
+    else
+      dispatch(
+        addWishlist({
+          id: id,
+          category: category,
+          size: sizes[0],
+        })
+      );
+
+    setLike(!like);
+  };
 
   return (
     <div className="text-center relative select-none animate-fadein">
@@ -45,7 +84,7 @@ const ProductCard = ({ data, sale = false }) => {
           ""
         )}
         <div
-          onClick={() => setLike((like) => !like)}
+          onClick={() => toggleLike()}
           className=" absolute bottom-3 right-2 cursor-pointer"
         >
           <img

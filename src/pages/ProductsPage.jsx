@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import Filter from "../component/Filter";
 import Products from "../component/Products";
 import { filterData } from "../assets/filter";
-import { getShoesFromAttribute, getAllShoes } from "../assets/shoes";
+import { getShoesFromAttribute } from "../assets/shoes";
 import { getTopFromAttribute } from "../assets/top";
 import { getAccessoriesFromAttribute } from "../assets/accessories";
 import { useLocation } from "react-router-dom";
 import BtnScroll from "../component/BtnScroll";
 import Helmet from "../component/Helmet";
 const ProductsPage = () => {
-  const [data, setData] = useState(getAllShoes());
+  const [data, setData] = useState([]);
 
   const search = useLocation().search;
   const category =
@@ -30,7 +30,7 @@ const ProductsPage = () => {
         setData(getShoesFromAttribute(listAttribute));
       else if (category === "top") setData(getTopFromAttribute(listAttribute));
       else {
-        console.log(category)
+        //console.log(category)
         setData(getAccessoriesFromAttribute(listAttribute));
       }
     }

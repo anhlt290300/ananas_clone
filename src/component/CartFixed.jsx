@@ -55,8 +55,8 @@ const CartFixed = () => {
       onClick={() => setOpen((open) => !open)}
       className={
         open
-          ? " fixed right-0 top-[calc(25vh-20px)] bg-orangePrimary text-center text-white px-3 py-4 cursor-pointer select-none group open z-[9990]"
-          : " fixed right-0 top-[calc(25vh-20px)] bg-orangePrimary text-center text-white px-3 py-4 cursor-pointer select-none group z-[9990]"
+          ? " fixed right-0 top-[calc(30vh-20px)] bg-orangePrimary text-center text-white flex items-center flex-col w-10 py-4 cursor-pointer select-none group open z-[9990]"
+          : " fixed right-0 top-[calc(30vh-20px)] bg-orangePrimary text-center flex items-center flex-col text-white w-10 py-4 cursor-pointer select-none group z-[9990]"
       }
     >
       <p className=" font-semibold">{numberItem}</p>
@@ -78,7 +78,7 @@ const CartFixed = () => {
       >
         <div className="h-2 w-2 absolute top-4 left-full -translate-x-1/2 bg-orangePrimary rotate-45" />
         <div className="w-full h-full p-3">
-          <p className=" font-semibold">GIỎ HÀNG ({cart.length})</p>
+          <p className=" font-semibold">GIỎ HÀNG ({numberItem})</p>
           <div className="my-3 pb-2 border-y-2 border-bgFooter max-h-[360px] overflow-y-auto">
             {data &&
               data.map((item, index) => {

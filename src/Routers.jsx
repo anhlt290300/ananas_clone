@@ -13,6 +13,7 @@ import Promotion from "./pages/Promotion";
 import Discoveryou from "./pages/Discoveryou";
 import HeaderMini from "./component/HeaderMini";
 import ComingSoon from "./pages/ComingSoon";
+import Wishlist from "./pages/Wishlist";
 
 import {
   createBrowserRouter,
@@ -76,6 +77,7 @@ const router = createBrowserRouter(
       <Route path="/promotion/clearance-sale/" element={<Promotion />} />
       <Route path="/discoveryou/" element={<Discoveryou />} />
       <Route path="/coming-soon/" element={<ComingSoon />} />
+      <Route path="/your-wishlist/" element={<Wishlist />} />
     </Route>
   )
 );
