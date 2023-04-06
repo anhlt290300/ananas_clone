@@ -9,7 +9,14 @@ const Loading = () => {
   useEffect(() => {
     if (isload) {
       setOpen(true);
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      let scrollLeft =
+        window.pageXOffset || document.documentElement.scrollLeft;
+      window.onscroll = function () {
+        window.scrollTo(scrollLeft, scrollTop);
+      };
       let a = setTimeout(() => {
+        window.onscroll = function () {};
         setOpen(false);
         dispatch(ToggleLoad());
       }, 1000);

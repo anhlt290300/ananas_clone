@@ -4,14 +4,19 @@ import { getShoesFromId } from "../assets/shoes";
 import { getAccessoriesFromId } from "../assets/accessories";
 import { getTopFromId } from "../assets/top";
 import { quantitys } from "../pages/ProductDetail";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteItem,
   updateQuantityItem,
   updateSizeItem,
 } from "../redux/cartSlice";
 import { ToggleLoad } from "../redux/loadingSlice";
+import { addItemDelete, removeItemDelete } from "../redux/deleteHistorySlice";
+
 const ProductCartCard = ({ id, category, size, quantity }) => {
+  const isDelete = useSelector((state) => state.deleteList.list).some(
+    (el) => el.id === id
+  );
+
   const dispatch = useDispatch();
   let { name, color, saleprice, realprice, images, soldout, href, sizes } =
     category === "shoes"
@@ -42,22 +47,25 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
         id: id,
         currentsize: size,
         newsize: newSize,
-        quantity: quantity,
       })
     );
     dispatch(ToggleLoad());
   };
 
   const handleDelete = () => {
-    dispatch(
-      deleteItem({
-        id: id,
-        size: size,
-      })
-    );
     dispatch(ToggleLoad());
+    setTimeout(
+      () =>
+        dispatch(
+          addItemDelete({
+            id: id,
+            size: size,
+          })
+        ),
+      1000
+    );
   };
-  return (
+  return !isDelete ? (
     <div className=" grid grid-cols-12 gap-12 select-none">
       <div className=" col-span-9 grid grid-cols-3 gap-4">
         <a href={href}>
@@ -216,6 +224,22 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
           </div>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className="text-[#808080]">
+      <span>Hình như hơi có biến.</span>
+      <span
+        onClick={() => {
+          dispatch(ToggleLoad());
+          setTimeout(
+            () => dispatch(removeItemDelete({ id: id, size: size })),
+            1000
+          );
+        }}
+        className="text-lg text-orangePrimary font-semibold italic underline cursor-pointer"
+      >
+        HOÀN TÁC
+      </span>
     </div>
   );
 };

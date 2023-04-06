@@ -5,8 +5,9 @@ const ProductCard = ({ data, sale = false }) => {
   const { images, href, type, name, color, saleprice, realprice, soldout } =
     data;
   const [like, setLike] = useState(false);
+
   return (
-    <div className="text-center relative select-none">
+    <div className="text-center relative select-none animate-fadein">
       <div
         className={
           !sale
@@ -85,7 +86,11 @@ const ProductCard = ({ data, sale = false }) => {
         <p className="my-2">{color}</p>
         <p className=" font-semibold">
           <span>{saleprice}</span>
-          {sale && <span className=" font-normal text-sm line-through ml-4">{realprice}</span>}
+          {sale && (
+            <span className=" font-normal text-sm line-through ml-4">
+              {realprice}
+            </span>
+          )}
         </p>
       </div>
     </div>

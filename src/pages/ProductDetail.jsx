@@ -1,29 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getShoesFromId } from "../assets/shoes";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import "swiper/css/navigation";
 import InvolvedProducts from "../component/InvolvedProducts";
 import WatchedProducts from "../component/WatchedProducts";
-import { getTopFromId } from "../assets/top";
-import { getAccessoriesFromId } from "../assets/accessories";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cartSlice";
 import { ToggleLoad } from "../redux/loadingSlice";
-
+import Helmet from "../component/Helmet";
+import { isChange } from "../redux/cartfixedSlice";
 export const quantitys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id_ = useParams().id;
-  const item =
-    getShoesFromId(id_.toUpperCase()) !== undefined
-      ? getShoesFromId(id_.toUpperCase())
-      : getTopFromId(id_.toUpperCase()) !== undefined
-      ? getTopFromId(id_.toUpperCase())
-      : getAccessoriesFromId(id_.toUpperCase());
+  const item = useLoaderData();
 
   const {
     images,
@@ -39,6 +31,14 @@ const ProductDetail = () => {
     soldout,
     category,
   } = item;
+
+  useEffect(() => {
+    if (item) {
+    } else {
+      navigate("/");
+    }
+  }, [item, navigate]);
+
   const [current, setCurrent] = useState(0);
   const [openImgs, setOpenImgs] = useState(false);
   const swiperRef = useRef(null);
@@ -120,11 +120,12 @@ const ProductDetail = () => {
           navigate("/your-cart");
         }, 1000);
       }
+      dispatch(isChange());
     }
   };
 
   return (
-    <div>
+    <Helmet title={name}>
       <div
         className={
           openImgs
@@ -643,7 +644,7 @@ const ProductDetail = () => {
 
       <InvolvedProducts />
       <WatchedProducts />
-    </div>
+    </Helmet>
   );
 };
 

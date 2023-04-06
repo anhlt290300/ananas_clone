@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react";
 
 const BtnScroll = () => {
   const handleScroll = () => {
-    const moveTostart = setInterval(() => {
-      //console.log(scrollY)
-      const y = window.scrollY;
-      window.scrollTo(0, y - 300);
-      if (y < 100) {
-        window.scrollTo(0, 0);
-        clearTimeout(moveTostart);
-      }
-    }, 10);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   const [open, setOpen] = useState(false);
@@ -27,8 +23,12 @@ const BtnScroll = () => {
 
   return (
     <div
-      onClick={() => handleScroll()}      
-      className={open ? " fixed right-8 top-2/3 cursor-pointer hover:shadow-lg shadow-black select-none":'hidden'}
+      onClick={() => handleScroll()}
+      className={
+        open
+          ? " fixed right-8 top-2/3 cursor-pointer hover:shadow-lg shadow-black select-none"
+          : "hidden"
+      }
     >
       <img
         src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/gotop.png"

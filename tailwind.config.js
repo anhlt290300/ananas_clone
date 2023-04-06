@@ -12,6 +12,15 @@ module.exports = {
       boxShadow: {
         innerbox: "inset 0 0 10px rgba(0,0,0,0.3)",
       },
+      keyframes: {
+        fadein: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 100 },
+        },
+      },
+      animation: {
+        fadein: "fadein 1.5s ease-in-out 1",
+      },
     },
   },
   plugins: [],

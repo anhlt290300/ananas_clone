@@ -21,3 +21,12 @@
     src: local('GeometricExtraBold'), url(./assets/URW\ Geometric\ Extra\ Bold\ Oblique.ttf) format('truetype');
   }
 }
+
+html[DisableScroll] {
+  overflow-y: scroll;
+}
+
+html[DisableScroll] body {
+  overflow-y: hidden;
+  height: 100vh;
+}

@@ -1,16 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getShoesFromId } from "../assets/shoes";
 import { getTopFromId } from "../assets/top";
 import { getAccessoriesFromId } from "../assets/accessories";
 import { getTotal } from "../utils/convertTotal";
+import { isChange } from "../redux/cartfixedSlice";
 
 const CartFixed = () => {
   const [open, setOpen] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
+
+  let numberItem = 0;
+  cart.forEach((el) => (numberItem += el.quantity));
   const [data, setData] = useState([]);
 
   const [total, setTotal] = useState(getTotal(cart));
+
+  const flag_change = useSelector((state) => state.changeCart.change);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (flag_change) {
+      let timeout = setTimeout(() => {
+        dispatch(isChange());
+        setOpen(true);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [flag_change, dispatch]);
 
   useEffect(() => {
     //console.log(cart.length);
@@ -31,18 +50,16 @@ const CartFixed = () => {
     setTotal(getTotal(cart));
   }, [cart]);
 
-
-
   return (
     <div
       onClick={() => setOpen((open) => !open)}
       className={
         open
-          ? " fixed right-0 top-[calc(25vh-20px)] bg-orangePrimary text-center text-white px-3 py-4 cursor-pointer select-none group open z-[900]"
-          : " fixed right-0 top-[calc(25vh-20px)] bg-orangePrimary text-center text-white px-3 py-4 cursor-pointer select-none group z-[900]"
+          ? " fixed right-0 top-[calc(25vh-20px)] bg-orangePrimary text-center text-white px-3 py-4 cursor-pointer select-none group open z-[9990]"
+          : " fixed right-0 top-[calc(25vh-20px)] bg-orangePrimary text-center text-white px-3 py-4 cursor-pointer select-none group z-[9990]"
       }
     >
-      <p className=" font-semibold">{cart.length}</p>
+      <p className=" font-semibold">{numberItem}</p>
       <img
         src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/icon_gio_hang.svg"
         alt=""
@@ -97,9 +114,11 @@ const CartFixed = () => {
             <span>Tổng cộng:</span>
             <span className="text-orangePrimary">{total} VNĐ</span>
           </p>
-          <div className="mt-3 py-2 bg-orangePrimary text-white font-semibold text-center cursor-pointer">
-            THANH TOÁN
-          </div>
+          <a href="/your-cart/" className="">
+            <p className=" py-2 bg-orangePrimary text-white font-semibold text-center cursor-pointer hover:text-white mt-3 ">
+              THANH TOÁN
+            </p>
+          </a>
           <div className="mt-3 py-2 bg-[#303030] text-white font-semibold text-center cursor-pointer">
             THÊM VÀO YÊU THÍCH
           </div>

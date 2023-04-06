@@ -4,6 +4,7 @@ import HomeBuy from "../component/HomeBuy";
 import HomeNews from "../component/HomeNews";
 import Slider from "../component/Slider";
 import SliderCollection from "../component/SliderCollection";
+import Helmet from '../component/Helmet'
 const sliders = [
   {
     image: "https://ananas.vn/wp-content/uploads/LowHigh_Desktop-1920x1050.jpg",
@@ -112,28 +113,30 @@ const homebuy = [
 
 const Home = () => {
   return (
-    <div className="h-fit relative text-center w-full">
-      <Slider sliders={sliders} />
-      <div className=" px-32 py-20">
-        <div className="grid grid-cols-2 gap-10">
-          {slidersCollection.map((item, index) => {
-            return <SliderCollection key={index} sliders={item} />;
-          })}
+    <Helmet title="Ananas - DiscoverYOU">
+      <div className="h-fit relative text-center w-full">
+        <Slider sliders={sliders} />
+        <div className=" px-32 py-20">
+          <div className="grid grid-cols-2 gap-10">
+            {slidersCollection.map((item, index) => {
+              return <SliderCollection key={index} sliders={item} />;
+            })}
+          </div>
+          <HomeBuy data={homebuy} />
         </div>
-        <HomeBuy data={homebuy} />
+        <HomeBanner
+          image="https://ananas.vn/wp-content/uploads/Banner_Clothing.jpg"
+          href="/product-list?gender=men,women&category=top,accessories&attribute="
+        />
+        <section>
+          <p className="text-3xl font-semibold mt-12">TIN TỨC & BÀI VIẾT</p>
+          <HomeNews />
+        </section>
+        <div className="bg-[#303030] select-none uppercase font-semibold px-6 py-1 inline-block text-white cursor-pointer mb-16">
+          muốn xem nữa
+        </div>
       </div>
-      <HomeBanner
-        image="https://ananas.vn/wp-content/uploads/Banner_Clothing.jpg"
-        href="/product-list?gender=men,women&category=top,accessories&attribute="
-      />
-      <section>
-        <p className="text-3xl font-semibold mt-12">TIN TỨC & BÀI VIẾT</p>
-        <HomeNews />
-      </section>
-      <div className="bg-[#303030] select-none uppercase font-semibold px-6 py-1 inline-block text-white cursor-pointer mb-16">
-        muốn xem nữa
-      </div>
-    </div>
+    </Helmet>
   );
 };
 

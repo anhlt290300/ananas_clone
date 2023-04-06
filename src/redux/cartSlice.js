@@ -1,12 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const setup = () => {
+  let cart =
+    localStorage.getItem("cart") !== null
+      ? JSON.parse(localStorage.getItem("cart"))
+      : [];
 
-const cart =
-  localStorage.getItem("cart") !== null
-    ? JSON.parse(localStorage.getItem("cart"))
-    : [];
+  const listdelete = JSON.parse(localStorage.getItem("listdelete"));
 
-const initialState = { cart: cart };
+  listdelete.forEach((element) => {
+    cart = cart.filter(
+      (el) =>
+        el.id !== element.id ||
+        (el.id === element.id && el.size !== element.size)
+    );
+  });
+
+  localStorage.setItem("listdelete", JSON.stringify([]));
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  return cart;
+};
+
+const initialState = { cart: setup() };
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -42,12 +58,12 @@ export const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(state.cart));
     },
     updateSizeItem: (state, action) => {
-      let { id, currentsize, newsize, quantity } = action.payload;
+      let { id, currentsize, newsize } = action.payload;
 
       let count = state.cart.filter((el) => el.id === id);
 
       if (count.length < 2) {
-        console.log("vao1");
+        //console.log("vao1");
         let result = state.cart.filter((el) => {
           if (el.id !== id) return el;
           else {
@@ -58,56 +74,26 @@ export const cartSlice = createSlice({
         state.cart = [...result];
         localStorage.setItem("cart", JSON.stringify(state.cart));
       } else {
-        if (state.cart.filter((el) => el.size === newsize).length > 0) {
-          let result = state.cart.filter((el) => {
-            if (el.id !== id) return el;
-            else if (el.size === currentsize) {
-            } else if (el.size === newsize) {
-              el.quantity += quantity;
-              return el;
-            } else {
-              return el;
-            }
-            return -1;
-          });
-          state.cart = [...result];
-          localStorage.setItem("cart", JSON.stringify(state.cart));
-        } else {
-          let result = state.cart.filter((el) => {
-            if (el.id !== id) return el;
-            else if (el.size === currentsize) {
-              el.size = newsize;
-              return el;
-            } else {
-              return el;
-            }
-          });
-          state.cart = [...result];
-          localStorage.setItem("cart", JSON.stringify(state.cart));
-        }
+        let result = state.cart.filter(
+          (el) => el.id !== id || (el.id === id && el.size !== currentsize)
+        );
+
+        state.cart = [...result];
+        localStorage.setItem("cart", JSON.stringify(state.cart));
       }
     },
     deleteItem: (state, action) => {
       //console.log("vao");
       let { id, size } = action.payload;
-      let result = [];
-      state.cart.forEach((element) => {
-        if (element.id !== id && element.size !== size)
-          result = [...result, element];
-      });
-      state.cart = result;
+      let result = state.cart.filter(
+        (el) => el.id !== id || (el.id === id && el.size !== size)
+      );
+      state.cart = [...result];
       localStorage.setItem("cart", JSON.stringify(state.cart));
     },
-
-    
   },
 });
 
-export const {
-  addItem,
-  updateQuantityItem,
-  updateSizeItem,
-  deleteItem,
-  
-} = cartSlice.actions;
+export const { addItem, updateQuantityItem, updateSizeItem, deleteItem } =
+  cartSlice.actions;
 export default cartSlice.reducer;

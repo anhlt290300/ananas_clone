@@ -7,8 +7,10 @@ import { getTopFromAttribute } from "../assets/top";
 import { getAccessoriesFromAttribute } from "../assets/accessories";
 import { useLocation } from "react-router-dom";
 import BtnScroll from "../component/BtnScroll";
+import Helmet from "../component/Helmet";
 const ProductsPage = () => {
   const [data, setData] = useState(getAllShoes());
+
   const search = useLocation().search;
   const category =
     new URLSearchParams(search).get("category") === null
@@ -27,22 +29,27 @@ const ProductsPage = () => {
       if (category === "shoes" || category === "")
         setData(getShoesFromAttribute(listAttribute));
       else if (category === "top") setData(getTopFromAttribute(listAttribute));
-      else setData(getAccessoriesFromAttribute(listAttribute));
+      else {
+        console.log(category)
+        setData(getAccessoriesFromAttribute(listAttribute));
+      }
     }
   }, [search, category, attribute]);
 
   return (
-    <div className="w-full grid grid-cols-4 gap-8 py-8 px-36">
-      <Filter
-        type={filterData.type}
-        type_item={filterData.type_item}
-        filters={filterData.filter}
-      />
-      <div className=" col-span-3">
-        <Products data={data} />
+    <Helmet title="Sản Phẩm - Ananas">
+      <div className="w-full grid grid-cols-4 gap-8 py-8 px-36">
+        <Filter
+          type={filterData.type}
+          type_item={filterData.type_item}
+          filters={filterData.filter}
+        />
+        <div className=" col-span-3">
+          <Products data={data} />
+        </div>
+        <BtnScroll />
       </div>
-      <BtnScroll />
-    </div>
+    </Helmet>
   );
 };
 

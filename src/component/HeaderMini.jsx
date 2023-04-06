@@ -2,6 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 const HeaderMini = () => {
   const cart = useSelector((state) => state.cart.cart);
+
+  let numberItem = 0;
+  cart.forEach((el) => (numberItem += el.quantity));
   return (
     <div className=" select-none bg-[#303030] px-12 py-1 flex justify-end items-center text-white text-xs">
       <nav className="flex">
@@ -43,7 +46,7 @@ const HeaderMini = () => {
             className="h-full"
             alt=""
           />
-          <span className="ml-2">Giỏ hàng ({cart.length})</span>
+          <span className="ml-2">Giỏ hàng ({numberItem})</span>
         </a>
       </nav>
     </div>
