@@ -6,7 +6,9 @@ const setup = () => {
       ? JSON.parse(localStorage.getItem("cart"))
       : [];
 
-  const listdelete = JSON.parse(localStorage.getItem("listdelete"));
+  const listdelete = JSON.parse(localStorage.getItem("listdelete"))
+    ? JSON.parse(localStorage.getItem("listdelete"))
+    : [];
 
   listdelete.forEach((element) => {
     cart = cart.filter(
