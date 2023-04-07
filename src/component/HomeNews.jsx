@@ -35,8 +35,8 @@ const homenews = [
 ];
 const HomeNews = ({ isHome = true }) => {
   return (
-    <div className="text-center select-none">
-      <div className="grid grid-cols-2 desktop-L:px-32 desktop:px-16 desktop-L:py-12 desktop:py-8 desktop-L:gap-10 desktop:gap-6 text-start">
+    <div className="text-center select-none m-0 tablet:mt-8">
+      <div className="grid grid-cols-2 desktop-L:px-32 desktop:px-16 tablet:px-4 desktop-L:py-12 desktop:py-8 desktop-L:gap-10 tablet:gap-6 text-start">
         {homenews.map((item, index) => {
           return (
             <div
@@ -44,17 +44,17 @@ const HomeNews = ({ isHome = true }) => {
               className={isHome ? "w-full" : index === 0 ? "hidden" : "w-full"}
             >
               <a href={item.href} className=" relative">
-                <img src={item.image} className="w-full h-[45vh] " alt="" />
+                <img src={item.image} className="w-full desktop-L:h-[45vh] desktop:h-[40vh] tablet:h-[30vh]" alt="" />
               </a>
               <div className=" desktop-L:mt-8 desktop:mt-4">
-                <a href={item.href} className="text-2xl font-semibold">
+                <a href={item.href} className="text-2xl font-semibold m-0 tablet:mt-4 block">
                   {item.title}
                 </a>
                 <p className="mt-2">
-                  {item.description}{" "}
+                  <span className=" desktop:h-auto desktop:text-base tablet:text-2xl tablet:max-h-[6rem] block overflow-hidden">{item.description}{" "}</span>
                   <a
                     href={item.href}
-                    className="italic text-orangePrimary hover:underline"
+                    className="italic text-orangePrimary hover:underline desktop:text-base tablet:text-2xl"
                   >
                     Đọc thêm
                   </a>{" "}

@@ -50,8 +50,8 @@ const ProductCard = ({ data, sale = false }) => {
       <div
         className={
           !sale
-            ? "w-full relative h-[40vh] group"
-            : "w-full relative h-[50vh] group"
+            ? "w-full relative desktop:h-[40vh] tablet:h-[50vh] group"
+            : "w-full relative desktop:h-[40vh] tablet:h-[50vh] group"
         }
       >
         <a href={href}>

@@ -116,23 +116,23 @@ const Home = () => {
     <Helmet title="Ananas - DiscoverYOU">
       <div className="h-fit relative text-center w-full">
         <Slider sliders={sliders} />
-        <div className=" desktop-L:px-32 desktop-L:py-20 desktop:px-16 desktop:py-10 tablet:px-3 tablet:py-6">
+        <div className=" desktop-L:px-32 desktop-L:py-20 desktop:px-16 desktop:py-10 tablet:p-5">
           <div className="grid grid-cols-2 desktop:gap-10 tablet:gap-6">
             {slidersCollection.map((item, index) => {
               return <SliderCollection key={index} sliders={item} />;
             })}
-          </div>
-          <HomeBuy data={homebuy} />
+          </div>          
         </div>
+        <HomeBuy data={homebuy} />
         <HomeBanner
           image="https://ananas.vn/wp-content/uploads/Banner_Clothing.jpg"
           href="/product-list?gender=men,women&category=top,accessories&attribute="
         />
         <section>
-          <p className="text-3xl font-semibold desktop-L:mt-12 desktop:mt-8">TIN TỨC & BÀI VIẾT</p>
+          <p className="text-3xl font-semibold desktop-L:mt-12 tablet:mt-8">TIN TỨC & BÀI VIẾT</p>
           <HomeNews />
         </section>
-        <div className="bg-[#303030] select-none uppercase font-semibold px-6 py-1 inline-block text-white cursor-pointer desktop-L:mb-16 desktop:mb-8">
+        <div className="bg-[#303030] select-none uppercase font-semibold px-6 py-1 inline-block text-white cursor-pointer desktop-L:mb-16 desktop:mb-8 tablet:mt-8 tablet:mb-16">
           muốn xem nữa
         </div>
       </div>

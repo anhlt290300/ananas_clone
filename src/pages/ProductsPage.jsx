@@ -38,13 +38,13 @@ const ProductsPage = () => {
 
   return (
     <Helmet title="Sản Phẩm - Ananas">
-      <div className="w-full grid grid-cols-4 gap-8 py-8 px-36">
+      <div className="w-full grid grid-cols-4 gap-8 py-8 desktop-L:px-36 desktop:px-16 px-0">
         <Filter
           type={filterData.type}
           type_item={filterData.type_item}
           filters={filterData.filter}
         />
-        <div className=" col-span-3">
+        <div className=" desktop:col-span-3 col-span-4">
           <Products data={data} />
         </div>
         <BtnScroll />

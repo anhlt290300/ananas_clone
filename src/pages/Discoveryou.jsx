@@ -14,13 +14,13 @@ const Discoveryou = () => {
         <div className="grid grid-cols-3">
           <img
             src="https://ananas.vn/wp-content/uploads/Corluray_bannerweb_desktop1920x1050.jpg"
-            className=" col-span-2"
+            className=" col-span-2 h-full"
             alt=""
           />
           <div className="bg-[#f1f2f2] p-8 text-start">
-            <p className=" font-semibold text-3xl">URBAS CORLURAY PACK</p>
-            <p className=" font-semibold">- SẮC THU KHÓ CƯỠNG -</p>
-            <p className="mt-6">
+            <p className=" font-semibold desktop:text-3xl tablet:text-xl">URBAS CORLURAY PACK</p>
+            <p className=" font-semibold desktop:text-base tablet:text-sm">- SẮC THU KHÓ CƯỠNG -</p>
+            <p className=" desktop:mt-6 tablet:mt-4">
               Urbas Corluray Pack đem đến lựa chọn “làm mới mình” với sự kết hợp
               5 gam màu mang sắc thu; phù hợp với những người trẻ năng động,
               mong muốn thể hiện cá tính riêng biệt khó trùng lặp.
@@ -38,7 +38,7 @@ const Discoveryou = () => {
             </p>
           </div>
         </div>
-        <div className="my-4">
+        <div className="mt-4 mb-12">
           <HomeNews isHome={false} />
         </div>
       </div>

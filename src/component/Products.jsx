@@ -52,7 +52,7 @@ const Products = ({ data, noBanner = false }) => {
       )}
       <div
         ref={(el) => (boxRef.current = el)}
-        className="w-full grid grid-cols-3 gap-5 my-12 opacity-100 "
+        className="w-full grid desktop:grid-cols-3 tablet:grid-cols-2 gap-5 desktop:my-12 tablet:my-8 opacity-100 desktop:px-0 tablet:px-2"
       >
         {products?.map((item, index) => {
           return <ProductCard key={index} data={item} sale={noBanner} />;

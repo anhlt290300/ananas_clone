@@ -45,7 +45,7 @@ const Cart = () => {
 
   return (
     <Helmet title="Giỏ Hàng - Ananas">
-      <div className="grid grid-cols-3 gap-6 py-8 px-32 select-none">
+      <div className=" desktop:grid target:flex grid-cols-3 gap-6 desktop:py-8 py-0 desktop-L:px-32 desktop:px-2 tablet:px-0 select-none">
         <div className={noItem ? " col-span-3 mb-16" : " col-span-2 "}>
           <div className={noItem ? "hidden" : "block"}>
             <HintCart data={data} />
@@ -72,8 +72,8 @@ const Cart = () => {
                   key={index}
                   className={
                     index !== 0
-                      ? "py-6 border-t-2 border-borderColor border-dashed"
-                      : "py-6"
+                      ? "py-6 desktop:px-0 tablet:px-6 border-t-2 border-borderColor border-dashed"
+                      : "py-6 desktop:px-0 tablet:px-6 "
                   }
                 >
                   <ProductCartCard
@@ -94,8 +94,8 @@ const Cart = () => {
           <div
             className={
               noItem
-                ? "flex justify-center items-end mt-12"
-                : "flex justify-between items-end"
+                ? "flex justify-center items-end mt-12 desktop:p-0 tablet:px-6 tablet:mb-12"
+                : "flex justify-between items-end desktop:p-0 tablet:px-6 tablet:mb-12"
             }
           >
             {!noItem && (
@@ -118,7 +118,7 @@ const Cart = () => {
           <div className="border-b-2 border-black mt-2" />
           <div className="mt-8">
             <p className=" font-semibold text-lg">NHẬP MÃ KHUYẾN MÃI</p>
-            <div className="flex py-2">
+            <div className="flex py-2 w-full">
               <input
                 onChange={(el) => {
                   setText(el.target.value);
@@ -127,11 +127,11 @@ const Cart = () => {
                 type="text"
                 name=""
                 value={text}
-                className="px-3 text-xl outline-none font-semibold w-[15rem] focus:shadow focus:shadow-blue-300 focus:drop-shadow-md"
+                className="px-3 text-xl outline-none font-semibold desktop-L:w-[15rem] desktop:w-[11rem] tablet:w-5/6 focus:shadow focus:shadow-blue-300 focus:drop-shadow-md"
               />
               <div
                 onClick={() => applyVourcher()}
-                className=" bg-orangePrimary text-white py-2 font-semibold w-full px-4 text-center cursor-pointer"
+                className=" bg-orangePrimary text-white py-2 font-semibold w-auto tablet:w-1/6 desktop:px-2 px-0 desktop-L:text-base desktop:text-sm text-center cursor-pointer"
               >
                 ÁP DỤNG
               </div>
@@ -157,7 +157,7 @@ const Cart = () => {
               <span>TẠM TÍNH</span>
               <span className=" text-xl">{total} VND</span>
             </p>
-            <div className=" bg-orangePrimary text-white font-semibold py-6 text-xl text-center cursor-pointer">
+            <div className=" bg-orangePrimary text-white font-semibold desktop-L:py-6 desktop:py-4 tablet:py-6 text-xl text-center cursor-pointer">
               TIẾP TỤC THANH TOÁN
             </div>
           </div>

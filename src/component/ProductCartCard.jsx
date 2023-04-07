@@ -192,16 +192,16 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
         </div>
       </div>
       <div className=" col-span-3 flex flex-col items-end justify-between relative">
-        <p className="text-xl font-semibold text-orangePrimary">
+        <p className=" desktop-L:text-xl desktop:text-lg tablet:text-xl font-semibold text-orangePrimary">
           {getTotalWishList(saleprice, quantity)} VND
         </p>
-        <p className="text-orangePrimary absolute right-0 top-10 italic">
+        <p className="text-orangePrimary absolute right-0 desktop-L:top-10 tablet:top-8  italic">
           {soldout ? "Hết hàng" : "Còn hàng"}
         </p>
         <div>
           <div
             onClick={() => setLike((like) => !like)}
-            className="border border-borderColor py-3 px-12 cursor-pointer"
+            className="border border-borderColor desktop-L:py-3 tablet:py-2 px-12 cursor-pointer"
           >
             <img
               src={
@@ -214,7 +214,7 @@ const ProductCartCard = ({ id, category, size, quantity }) => {
           </div>
           <div
             onClick={() => handleDelete()}
-            className="bg-[#303030] py-3 px-12 cursor-pointer mt-3"
+            className="bg-[#303030] desktop-L:py-3 tablet:py-2 px-12 cursor-pointer mt-3"
           >
             <img
               className="m-auto"

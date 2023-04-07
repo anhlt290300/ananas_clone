@@ -27,7 +27,7 @@ const HintCart = ({ data }) => {
   };
   return (
     <div>
-      <p className="text-base font-semibold my-4">BẠN CÓ CẦN THÊM?</p>
+      <p className=" desktop:pl-0 tablet:pl-6 text-base font-semibold my-4">BẠN CÓ CẦN THÊM?</p>
       <div className=" border-b-2 border-black" />
       <div className="p-6">
         <Swiper

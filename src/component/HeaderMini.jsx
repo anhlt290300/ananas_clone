@@ -6,7 +6,7 @@ const HeaderMini = () => {
   let numberItem = 0;
   cart.forEach((el) => (numberItem += el.quantity));
   return (
-    <div className=" select-none bg-[#303030] px-12 py-1 flex justify-end items-center text-white text-xs">
+    <div className=" select-none bg-[#303030] px-12 py-1 desktop:flex hidden justify-end items-center text-white text-xs">
       <nav className="flex">
         <a href="/search-order" className="flex items-center px-2">
           <img

@@ -88,7 +88,7 @@ const Filter = ({ type, type_item, filters }) => {
   };
 
   return (
-    <div className="py-8 w-full select-none">
+    <div className="py-8 w-full select-none desktop:block hidden">
       <div className="flex items-center justify-center pb-4 border-b-2 border-black">
         {/* {category} */}
         {type.map((item, index) => {

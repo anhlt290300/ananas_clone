@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const data = [
   {
@@ -395,44 +395,18 @@ const womans = [
 ];
 
 const Header = () => {
-  const [current, setCurrent] = useState(0);
-  const [flag, setFlag] = useState(true);
-
-  const pre = () => {
-    if (current === 0) {
-      setCurrent(thumnails.length - 1);
-    } else setCurrent((current) => current - 1);
-  };
-
-  const next = () => {
-    if (current === thumnails.length - 1) {
-      setCurrent(0);
-    } else setCurrent((current) => current + 1);
-  };
-
-  useEffect(() => {
-    let interval = setInterval(() => {
-      if (flag) {
-        if (current === thumnails.length - 1) {
-          setCurrent(0);
-        } else setCurrent((current) => current + 1);
-      }
-      //console.log('123')
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [flag, current]);
-
+  const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
   return (
     <div className=" select-none w-full">
-      <div className="flex items-center justify-around w-full relative h-[7rem] ">
-        <a href="/">
+      <div className=" desktop:flex items-center justify-around grid grid-cols-12  w-full relative desktop:h-[7rem] h-[8rem] ">
+        <a href="/" className=" block col-span-4 ">
           <img
             src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/Logo_Ananas_Header.svg"
             alt=""
-            className="bg-cover"
+            className="bg-cover m-auto"
           />
         </a>
-        <nav className=" h-full pt-6">
+        <nav className=" h-full pt-6 desktop:block hidden">
           <ul className="flex h-full">
             {data.map((item, index) => {
               return (
@@ -662,7 +636,7 @@ const Header = () => {
             </a>
           </ul>
         </nav>
-        <div className="relative ">
+        <div className="relative desktop:block hidden">
           <img
             className=" absolute top-1/2 left-2 -translate-y-1/2"
             src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/icon_tim_kiem.svg"
@@ -674,66 +648,41 @@ const Header = () => {
             className=" outline-none border-borderColor border pl-8 pr-2 py-2 focus:border-blue-300 focus:shadow focus:shadow-blue-300"
           />
         </div>
-      </div>
 
-      <div className=" bg-bgGray py-3 flex items-center justify-center w-full">
-        <svg
-          onClick={() => pre()}
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          className="bi bi-chevron-left cursor-pointer text-bgFooter hover:text-black hover:scale-110 transition-all duration-200 ease-in-out"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
-          />
-        </svg>
-        <div
-          onMouseEnter={() => setFlag(false)}
-          onMouseLeave={() => setFlag(true)}
-          className="w-1/2 block overflow-hidden"
-        >
-          <div
-            style={{
-              transform: `translateX(-${current * 50}vw)`,
-              transition: "all",
-              transitionDuration: "1s",
-            }}
-            className="w-full flex flex-row ease-in-out z-0"
-          >
-            {thumnails.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="block text-center whitespace-nowrap min-w-full"
-                >
-                  <p>
-                    <a href="/faqs/" className="hover:text-black">
-                      {item}
-                    </a>
-                  </p>
-                </div>
-              );
-            })}
+        <div className=" col-span-6 desktop:hidden flex items-center justify-center border-l border-borderColor h-full">
+          <div className="mx-4">
+            <img
+              src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/mobile/mb_search.png"
+              alt=""
+            />
           </div>
+          <a href="" className="mx-4">
+            <img
+              src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/mobile/mb_location.png"
+              alt=""
+            />
+          </a>
+          <a href="/your-cart/" className="flex items-end mx-4">
+            <img
+              src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/mobile/mb_cart.png"
+              alt=""
+            />
+            <span className="text-3xl">(10)</span>
+          </a>
         </div>
-        <svg
-          onClick={() => next()}
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          className="bi bi-chevron-right cursor-pointer  text-bgFooter hover:text-black hover:scale-110 transition-all duration-200 ease-in-out"
-          viewBox="0 0 16 16"
+        <div
+          onClick={() => setOpenBurgerMenu((openBurgerMenu) => !openBurgerMenu)}
+          className={
+            openBurgerMenu
+              ? " col-span-2 desktop:hidden  h-full w-[8rem] bg-[#4c4c4c] flex flex-col items-center justify-center relative group open"
+              : " col-span-2 desktop:hidden  h-full w-[8rem] bg-[#4c4c4c] flex flex-col items-center justify-center relative group"
+          }
         >
-          <path
-            fillRule="sevenodd"
-            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-          />
-        </svg>
+          <span className="w-2/5 h-1 bg-white rounded-full my-1 transition-all duration-300 ease-in-out group-[.open]:w-0"></span>
+          <span className="w-2/5 h-1 bg-white rounded-full my-1 transition-all duration-300 ease-in-out group-[.open]:rotate-45"></span>
+          <span className="w-2/5 h-1 bg-white rounded-full my-1 transition-all duration-300 ease-in-out absolute top-1/2 left-1/2 -translate-y-[calc(50%+4px)] -translate-x-1/2  group-[.open]:-rotate-45"></span>
+          <span className="w-2/5 h-1 bg-white rounded-full my-1 transition-all duration-300 ease-in-out group-[.open]:w-0"></span>
+        </div>
       </div>
     </div>
   );

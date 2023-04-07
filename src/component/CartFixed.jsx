@@ -55,8 +55,8 @@ const CartFixed = () => {
       onClick={() => setOpen((open) => !open)}
       className={
         open
-          ? " fixed right-0 top-[calc(30vh-20px)] bg-orangePrimary text-center text-white flex items-center flex-col w-10 py-4 cursor-pointer select-none group open z-[9990]"
-          : " fixed right-0 top-[calc(30vh-20px)] bg-orangePrimary text-center flex items-center flex-col text-white w-10 py-4 cursor-pointer select-none group z-[9990]"
+          ? " fixed right-0 top-[calc(30vh-20px)] bg-orangePrimary text-center text-white desktop:flex hidden items-center flex-col w-10 py-4 cursor-pointer select-none group open z-[9990]"
+          : " fixed right-0 top-[calc(30vh-20px)] bg-orangePrimary text-center desktop:flex hidden items-center flex-col text-white w-10 py-4 cursor-pointer select-none group z-[9990]"
       }
     >
       <p className=" font-semibold">{numberItem}</p>

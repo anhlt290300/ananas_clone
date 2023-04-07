@@ -49,16 +49,16 @@ const SliderCollection = ({ sliders }) => {
           onClick={() => swiperRef.current?.slidePrev()}
           className={
             current === 0
-              ? "mx-1 h-[6px] w-12 bg-orangePrimary cursor-pointer"
-              : "mx-1 h-[6px] w-12 bg-bgGray cursor-pointer"
+              ? "mx-1 desktop:h-[6px] tablet:h-[5px] desktop:w-12 tablet:w-10 bg-orangePrimary cursor-pointer"
+              : "mx-1 desktop:h-[6px] tablet:h-[5px] desktop:w-12 tablet:w-10 bg-bgGray cursor-pointer"
           }
         />
         <div
           onClick={() => swiperRef.current?.slideNext()}
           className={
             current === 1
-              ? "mx-1 h-[6px] w-12 bg-orangePrimary cursor-pointer"
-              : "mx-1 h-[6px] w-12 bg-bgGray cursor-pointer"
+              ? "mx-1 desktop:h-[6px] tablet:h-[5px] desktop:w-12 tablet:w-10 bg-orangePrimary cursor-pointer"
+              : "mx-1 desktop:h-[6px] tablet:h-[5px] desktop:w-12 tablet:w-10 bg-bgGray cursor-pointer"
           }
         />
       </div>
